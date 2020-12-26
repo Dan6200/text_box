@@ -1,19 +1,15 @@
-import React, {Component} from 'react';
+import React, { useState } from 'react';            
 
-class TextBox extends React.Component 
+let word = ''
+
+function TextBox()
 {
-  constructor(props) {
-    super(props);
-    this.state = {
-        line: [''],
-        index: 0,
-        nextline: {}
-    } 
-    this.string = '';
-    this.handleKeyPress = this.handleKeyPress.bind(this);
-  }
+    const [line, setLine] = useState([''])
+    const [index, setIndex] = useState(0)
+    const [nextLine, setNextLine] = useState({})
+
  /* 
-  print2Screen(state) {
+  printScreen(state) {
     output = '';
     while (state.nextline === undefined) 
     {
@@ -24,38 +20,67 @@ class TextBox extends React.Component
     }
   }
 */
-  handleKeyPress(e) {
-    if (e.key === "Backspace") 
-        this.setState(state => ({
-            line: state.line.substring(0, state.line.length-1)
-        }))
-    else if (e.keyCode === 32)
-        this.setState(state => {
-                    this.string += '\x20\x20\u200C';
-                    state.index++;
-                    let retVal = {line: state.line[state.index] + }
-                    return retVal;
-                })
-    else{
-        if (e.key === "Shift" || e.key === "CapsLock") 
-            return
-        else {
-            console.log(this.state);
-            this.string+= e.key
-            this.setState(
-                state =>  {
+    const printLine = array => {
+        return (
+            array.map((elem,index) => (
+                <span key = {index.toString()}>
+                    {elem}
+                </span>
+            ))
+        )
+    }
 
-                    ({line: [this.string]})
-                }
-            )
+    const handleKeyPress = (e) => {
+        let updateLine = line
+        if (e.key === "Backspace")
+        { 
+            console.log(word)
+            if (word && word.length > 1) 
+                word = word.substring(0, word.length-1)
+            else 
+                word = ''
+            updateLine = line
+            if (line[index] === '') {
+                updateLine.pop()
+                if (index > 0) setIndex(index - 1);
+                word = updateLine[index]
+                console.log(word)
+            }
+            else {
+                updateLine[index] = word;
+            }
+            setLine([...updateLine])
+        }
+        else if (e.keyCode === 32)
+        {
+            e.preventDefault()
+            word = '\x20\x20\u200C'
+            console.log(index)
+            updateLine = line
+            updateLine.push(word)
+            setLine([...updateLine])
+            setIndex(index + 2)
+            console.log(index)
+            word = ''
+        }
+        else
+        {
+            if (e.key === "Shift" || e.key === "CapsLock") 
+                return
+            else {
+                word+= e.key
+                updateLine = line
+                updateLine[index] = word
+                setLine([...updateLine])
+            }
         }
     }
-  }
-  render() {
-    return <div id="txtbox" tabIndex="0" onKeyDown={this.handleKeyPress}>
-        <span>{this.state.line}</span>
-    </div>
-  }
+    console.log(line)
+    return (
+        <div id="txtbox" tabIndex="0" onKeyDown={handleKeyPress}>
+            <p>{printLine(line)}</p>
+        </div>
+    )
 }
 
 export default TextBox;

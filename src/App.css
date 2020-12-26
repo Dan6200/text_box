@@ -30,7 +30,7 @@ html, body {
     border: none;
 }
 
-#txtbox span {
+#txtbox span:last-child {
     border: 1em #a9a9a9a;
     border-style: none solid none none;
 }
