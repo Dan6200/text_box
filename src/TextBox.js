@@ -1,6 +1,5 @@
 import React, { useState } from 'react';            
-
-let word = ''
+//import Backspace form 'KeyFunctions/Backspace.js'
 
 function TextBox()
 {
@@ -31,20 +30,20 @@ function TextBox()
     }
 
     const handleKeyPress = (e) => {
+    try {
         let updateLine = line
+        /** Create function files that handle each keyboard operation **/
         if (e.key === "Backspace")
         { 
-            console.log(word)
+            let word = updateLine[index]
             if (word && word.length > 1) 
                 word = word.substring(0, word.length-1)
             else 
                 word = ''
-            updateLine = line
-            if (line[index] === '') {
+            if (updateLine.length >= 1 && updateLine[index].length === 1) {
                 updateLine.pop()
                 if (index > 0) setIndex(index - 1);
-                word = updateLine[index]
-                console.log(word)
+                word = updateLine[index-1]
             }
             else {
                 updateLine[index] = word;
@@ -54,28 +53,29 @@ function TextBox()
         else if (e.keyCode === 32)
         {
             e.preventDefault()
-            word = '\x20\x20\u200C'
-            console.log(index)
             updateLine = line
-            updateLine.push(word)
+            updateLine.push('\x20\u200C')
+            let newIndex = updateLine.length
+            updateLine[newIndex] = ''
+            setIndex(newIndex)
             setLine([...updateLine])
-            setIndex(index + 2)
-            console.log(index)
-            word = ''
         }
         else
         {
             if (e.key === "Shift" || e.key === "CapsLock") 
                 return
             else {
-                word+= e.key
                 updateLine = line
-                updateLine[index] = word
+                updateLine[index] += e.key
+                console.log(updateLine)
                 setLine([...updateLine])
             }
         }
     }
-    console.log(line)
+    catch (e) {
+        console.log(line.length-1, index, e)
+    }
+ }
     return (
         <div id="txtbox" tabIndex="0" onKeyDown={handleKeyPress}>
             <p>{printLine(line)}</p>
