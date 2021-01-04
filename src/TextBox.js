@@ -1,11 +1,11 @@
 import React, { useState } from 'react';            
-//import Backspace form 'KeyFunctions/Backspace.js'
+import {Backspace} from './KeyFunctions.js'
 
 function TextBox()
 {
     const [line, setLine] = useState([''])
     const [index, setIndex] = useState(0)
-    const [nextLine, setNextLine] = useState({})
+    //const [nextLine, setNextLine] = useState({})
 
  /* 
   printScreen(state) {
@@ -23,7 +23,7 @@ function TextBox()
         return (
             array.map((elem,index) => (
                 <span key = {index.toString()}>
-                    {elem}
+                    {elem + '\u200C'}
                 </span>
             ))
         )
@@ -31,30 +31,25 @@ function TextBox()
 
     const handleKeyPress = (e) => {
     try {
-        let updateLine = line
         /** Create function files that handle each keyboard operation **/
         if (e.key === "Backspace")
-        { 
-            let word = updateLine[index]
-            if (word && word.length > 1) 
-                word = word.substring(0, word.length-1)
-            else 
-                word = ''
-            if (updateLine.length >= 1 && updateLine[index].length === 1) {
-                updateLine.pop()
-                if (index > 0) setIndex(index - 1);
-                word = updateLine[index-1]
-            }
-            else {
-                updateLine[index] = word;
-            }
-            setLine([...updateLine])
+        {   /** Calls the Function that handles backspaces **/
+            let {
+                newLine,
+                newIdx, 
+            } = Backspace({
+                word: line[index],
+                line: [...line],
+                index
+            })
+            setIndex(newIdx)
+            setLine(newLine)
         }
         else if (e.keyCode === 32)
         {
             e.preventDefault()
-            updateLine = line
-            updateLine.push('\x20\u200C')
+            let updateLine = line
+            updateLine.push('\x20')
             let newIndex = updateLine.length
             updateLine[newIndex] = ''
             setIndex(newIndex)
@@ -65,9 +60,8 @@ function TextBox()
             if (e.key === "Shift" || e.key === "CapsLock") 
                 return
             else {
-                updateLine = line
+                let updateLine = line
                 updateLine[index] += e.key
-                console.log(updateLine)
                 setLine([...updateLine])
             }
         }
@@ -83,4 +77,4 @@ function TextBox()
     )
 }
 
-export default TextBox;
+export default TextBox
