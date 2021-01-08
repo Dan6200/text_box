@@ -4,7 +4,6 @@
 //////////////////////////////////////////////////////////////////////////////////////////////////
 
 
-
 //eslint-disable-next-line
 import React, { useState, useRef, useEffect } from 'react'            
 import handleKeyPress from './KeyFunctions.js'
@@ -12,39 +11,54 @@ import handleKeyPress from './KeyFunctions.js'
 function TextBox()
 {
     /// Manages the state of the lines on the screen
-    const [line, setLine] = useState([['']])
+    const [line, setLine] = useState([[]])
     /// Line Index...
     const [lIdx, setLIdx] = useState(0)
     /// Word Index...
     const [wIdx, setWIdx] = useState(0)
    
     const textRef = useRef()
+   
+    const paraRef = useRef()
 
     const cursorRef = useRef()
 
     const Cursor = () => {
-        return <i id='cursor' ref = {cursorRef}></i>
+        return (<i id='cursor' ref = {cursorRef}></i>)
     }
 
     const printCaret = (array, curIdx) => {
         const displayedText  = [...array]
-        displayedText.splice(curIdx+1,0, <Cursor/>)
-        return displayedText 
+        displayedText.splice(curIdx+1,0, <Cursor key={'caret'+curIdx+1}/>)
+        return  <span ref={textRef}> {displayedText} </span> 
     }
    
     const printPage = (line, lIdx, wIdx) => {
         return (
             line.map((elem, index) => {
-                if (index == lIdx) 
+                if (index === lIdx) 
                    elem = printCaret(line[lIdx], wIdx)
                 return (
-                    <span className='Text' id='normal-text' 
-                        key={elem[lIdx][wIdx]+lIdx+wIdx}>
+                    <p className='Text' 
+                        id='normal-text' 
+                        key={elem[wIdx]+lIdx}
+                    ref={paraRef}>
                         {elem}
-                    </span>
+                    </p>
                 )
             })
         )
+    }
+
+    const KeyPressParam = {
+                line, 
+                setLine, 
+                lIdx,
+                setLIdx,
+                wIdx,
+                setWIdx,
+                textRef,
+                paraRef
     }
 
     return (
@@ -52,17 +66,9 @@ function TextBox()
             tabIndex="0" 
             onKeyDown={(e) => handleKeyPress(
                 e,
-                line, 
-                setLine, 
-                lIdx,
-                setLIdx,
-                wIdx,
-                setWIdx,
-                textRef
+                KeyPressParam 
             )}>
-                <p>
-                    {printPage(line, lIdx, wIdx)}
-                </p>
+                {printPage(line, lIdx, wIdx)}
         </div>
     )
 }
