@@ -30,7 +30,12 @@ html, body {
     border: none;
 }
 
-#txtbox span:last-child {
-    border: 1em #a9a9a9a;
+i#cursor {
+    display: inline;
+    position: absolute;
+    height: 1.2em;
+    width: 0;
+    border-color: #000000;
     border-style: none solid none none;
+    border-width: .15em;
 }
