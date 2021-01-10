@@ -1,41 +1,97 @@
-import React, {Component} from 'react';
+//////////////////////////////////////////////////////////////////////////////////////////////////
+////////    In This File I Implement A Text box that handles the User's mouse and  /////////////// 
+////////    ...keyboard input and displays the data received on the Screen.    ///////////////////
+//////////////////////////////////////////////////////////////////////////////////////////////////
 
-class TextBox extends React.Component 
+
+//eslint-disable-next-line
+import React, { useState, useRef, useEffect } from 'react'            
+import handleKeyPress from './KeyFunctions.js'
+import {useInterval} from './utilities.js'
+
+function TextBox()
 {
-  constructor(props) {
-    super(props);
-    this.state = {
-      line: "",
-      nextline: {}
-    } 
-    this.handleKeyPress = this.handleKeyPress.bind(this);
-  }
-  
-  handleKeyPress(e) {
-    if (e.key === "Backspace") 
-        this.setState(state => ({
-            line: state.line.substring(0, state.line.length-1)
-        }))
-    else if (e.keyCode === 32)
-        this.setState(
-                state => ({line: state.line+ '\x20\x20\u200C\x20\x20\u200C'})
-            )
-    else{
-        if (e.key === "Shift" || e.key === "CapsLock") 
-            return
-        else {
-            console.log(this.state.line);
-            this.setState(
-                state => ({line: state.line+ e.key})
-            )
+    /// Manages the state of the lines on the screen
+    const [line, setLine] = useState([[]])
+    /// Line Index...
+    const [lIdx, setLIdx] = useState(0)
+    /// Word Index...
+    const [wIdx, setWIdx] = useState(0)
+
+    const [caretOn, showCaret] = useState(false)
+
+    const [timerOn, setTimer] = useState(true)
+
+    const textRef = useRef()
+   
+    const paraRef = useRef()
+
+    const cursorRef = useRef()
+
+    useInterval(() => {
+        if (caretOn){
+            showCaret(false)
         }
+        else 
+            showCaret(true)
+    }, 500, timerOn)
+    
+    const Cursor = props => {
+        props.setTimer(true) // starts the blinking of caret
+        return (<i id='cursor' ref = {cursorRef} style = {props.blinker()}></i>)
     }
-  }
-  render() {
-    return <div id="txtbox" tabIndex="0" onKeyDown={this.handleKeyPress}>
-        <span>{this.state.line}</span>
-    </div>
-  }
+
+    const blinker = isOn => (isOn) ? {display: 'inline-block'} :
+        {display: 'none'}
+
+    const printCaret = (array, curIdx) => {
+        const displayedText  = [...array]
+        displayedText.splice(curIdx+1,0, <Cursor blinker={() => blinker(caretOn)} setTimer={setTimer} key={'caret'+curIdx+1}/>)
+        return  <span ref={textRef}> {displayedText} </span> 
+    }
+   
+    const printPage = (line, lIdx, wIdx) => {
+        return (
+            line.map((elem, index) => {
+                if (index === lIdx) 
+                   elem = printCaret(line[lIdx], wIdx)
+                return (
+                    <p className='Text' 
+                        id='normal-text' 
+                        key={elem[wIdx]+lIdx}
+                    ref={paraRef}>
+                        {elem}
+                    </p>
+                )
+            })
+        )
+    }
+
+    const KeyPressParam = {
+        line, 
+        setLine, 
+        lIdx,
+        setLIdx,
+        wIdx,
+        setWIdx,
+        textRef,
+        paraRef,
+        setTimer,
+        showCaret
+    }
+
+    return (
+        <div id="txtbox" 
+            tabIndex="0" 
+            onKeyDown={(e) => handleKeyPress(
+                e,
+                KeyPressParam 
+            )}>
+                {printPage(line, lIdx, wIdx)}
+        </div>
+    )
 }
 
-export default TextBox;
+    
+
+export default TextBox
