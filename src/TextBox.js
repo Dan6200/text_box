@@ -34,6 +34,10 @@ function TextBox()
             showCaret(true)
     }, 500, timerOn)
 
+    useEffect(() => {
+        setTimer(true)
+    }, [line])
+
     const KeyPressParam = [
         line, 
         setLine, 

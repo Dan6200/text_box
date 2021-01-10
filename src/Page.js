@@ -1,5 +1,6 @@
 import React  from 'react'
 
+
 const Cursor = props => {
     return (<i id='cursor' ref = {props.myRef} style = {props.blinker()}></i>)
 }
@@ -7,7 +8,7 @@ const Cursor = props => {
 const blinker = isOn => (isOn) ? {display: 'inline-block'} :
     {display: 'none'}
 
-const printCaret = (array, curIdx, {textRef, cursorRef, caretOn}) => {
+const printCaret = (array, curIdx, {textRef, cursorRef, caretOn, setTimer}) => {
     const displayedText  = [...array]
     displayedText.splice(
         curIdx + 1, 
@@ -21,9 +22,7 @@ const printCaret = (array, curIdx, {textRef, cursorRef, caretOn}) => {
     return  <span ref={textRef}> {displayedText} </span> 
 }
 
-export const printPage = ([line, lIdx, wIdx, textRef, paraRef, cursorRef, caretOn, showCaret, timerOn, setTimer]) => {
-    setTimer(true) // Starts the interval that controls the blinking of the caret.
-
+export const printPage = ([line, lIdx, wIdx, textRef, paraRef, cursorRef, caretOn, showCaret]) => {
     return (
         line.map((elem, index) => {
             if (index === lIdx) 
