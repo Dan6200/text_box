@@ -18,9 +18,9 @@ function TextBox()
     /// Word Index...
     const [wIdx, setWIdx] = useState(0)
 
-    const [caretOn, showCaret] = useState(false)
+    const [blinkerOn, setBlinker] = useState(false)
 
-    const [timerOn, setTimer] = useState(true)
+    const [timer, setTimer] = useState(null)
 
     const textRef = useRef()
    
@@ -28,16 +28,17 @@ function TextBox()
 
     const cursorRef = useRef()
 
-    useInterval(() => {
-        if (caretOn){
-            showCaret(false)
+    const interval = useInterval( timer && () => {
+        if (blinkerOn){
+            setBlinker(false)
         }
-        else 
-            showCaret(true)
-    }, 500, timerOn)
+        else setBlinker(true)
+        console.log('hey')
+    }, 1000)
     
+    useEffect(() => interval.current = {on: false}, [interval])
+
     const Cursor = props => {
-        props.setTimer(true) // starts the blinking of caret
         return (<i id='cursor' ref = {cursorRef} style = {props.blinker()}></i>)
     }
 
@@ -46,7 +47,7 @@ function TextBox()
 
     const printCaret = (array, curIdx) => {
         const displayedText  = [...array]
-        displayedText.splice(curIdx+1,0, <Cursor blinker={() => blinker(caretOn)} setTimer={setTimer} key={'caret'+curIdx+1}/>)
+        displayedText.splice(curIdx+1,0, <Cursor blinker={() => blinker(blinkerOn)} key={'caret'+curIdx+1}/>)
         return  <span ref={textRef}> {displayedText} </span> 
     }
    
@@ -76,8 +77,6 @@ function TextBox()
         setWIdx,
         textRef,
         paraRef,
-        setTimer,
-        showCaret
     }
 
     return (

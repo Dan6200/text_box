@@ -5,9 +5,12 @@
 const cpyMatrix = array => array.map(elem => [...elem])
 
 export default function handleKeyPress 
-    (e, {line, setLine, lIdx, setLIdx, wIdx, setWIdx, textRef, paraRef})  
+    (e, {line, setLine, lIdx, setLIdx, wIdx, setWIdx, textRef, paraRef, setTimer, showCaret})  
 {
     try {
+        /// Stops the caret from blinking...
+        showCaret(true)
+        setTimer(false)
         switch (e.key) {
             case "Backspace":
             { // Calls the Function that handles backspaces 
@@ -53,7 +56,6 @@ export default function handleKeyPress
                 setLine(nLine)
                 setLIdx(nLIdx)
                 setWIdx(nWIdx)
-                console.log(line)
             }
     }
     catch (e) {
