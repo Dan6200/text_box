@@ -5,7 +5,7 @@
 const cpyMatrix = array => array.map(elem => [...elem])
 
 export default function handleKeyPress 
-    (e, {line, setLine, lIdx, setLIdx, wIdx, setWIdx, textRef, paraRef, setTimer, showCaret})  
+    (e, line, setLine, lIdx, setLIdx, wIdx, setWIdx, textRef, paraRef, setTimer, showCaret)  
 {
     try {
         /// Stops the caret from blinking...

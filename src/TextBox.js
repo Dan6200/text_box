@@ -7,6 +7,7 @@
 //eslint-disable-next-line
 import React, { useState, useRef, useEffect } from 'react'            
 import handleKeyPress from './KeyFunctions.js'
+import {printPage} from './Page.js'
 import {useInterval} from './utilities.js'
 
 function TextBox()
@@ -29,45 +30,11 @@ function TextBox()
     const cursorRef = useRef()
 
     useInterval(() => {
-        if (caretOn){
-            showCaret(false)
-        }
-        else 
+        (caretOn) ? showCaret(false) :
             showCaret(true)
     }, 500, timerOn)
-    
-    const Cursor = props => {
-        props.setTimer(true) // starts the blinking of caret
-        return (<i id='cursor' ref = {cursorRef} style = {props.blinker()}></i>)
-    }
 
-    const blinker = isOn => (isOn) ? {display: 'inline-block'} :
-        {display: 'none'}
-
-    const printCaret = (array, curIdx) => {
-        const displayedText  = [...array]
-        displayedText.splice(curIdx+1,0, <Cursor blinker={() => blinker(caretOn)} setTimer={setTimer} key={'caret'+curIdx+1}/>)
-        return  <span ref={textRef}> {displayedText} </span> 
-    }
-   
-    const printPage = (line, lIdx, wIdx) => {
-        return (
-            line.map((elem, index) => {
-                if (index === lIdx) 
-                   elem = printCaret(line[lIdx], wIdx)
-                return (
-                    <p className='Text' 
-                        id='normal-text' 
-                        key={elem[wIdx]+lIdx}
-                    ref={paraRef}>
-                        {elem}
-                    </p>
-                )
-            })
-        )
-    }
-
-    const KeyPressParam = {
+    const KeyPressParam = [
         line, 
         setLine, 
         lIdx,
@@ -78,16 +45,29 @@ function TextBox()
         paraRef,
         setTimer,
         showCaret
-    }
+    ]
+
+    const printPageParam = [
+        line,
+        lIdx,
+        wIdx,
+        textRef,
+        paraRef,
+        cursorRef,
+        caretOn,
+        showCaret,
+        timerOn,
+        setTimer
+    ]
 
     return (
         <div id="txtbox" 
             tabIndex="0" 
             onKeyDown={(e) => handleKeyPress(
                 e,
-                KeyPressParam 
+                ...KeyPressParam 
             )}>
-                {printPage(line, lIdx, wIdx)}
+                {printPage(printPageParam)}
         </div>
     )
 }
