@@ -22,7 +22,7 @@ html, body {
     box-shadow: 3px 3px 3px #606060;
     width: 70em;
     margin: 5em auto;
-    padding: 5em;
+    padding: 8em;
     background-color: white;
     z-index: 0;
 }
@@ -31,13 +31,12 @@ p {
     font-family: sans-serif;
     font-size: 1.8em;
     display: inline-block;
-    height: 2.3em;
+    height: 2.0em;
     width: 100%;
     line-height: 2.3em;
     letter-spacing: .1px;
     margin: 0;
     padding: 0;
-    padding-bottom: 1em;
 }
 
 p span {

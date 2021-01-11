@@ -4,10 +4,9 @@
 //////////////////////////////////////////////////////////////////////////////////////////////////
 
 
-//eslint-disable-next-line
 import React, { useState, useRef, useEffect } from 'react'            
 import handleKeyPress from './KeyFunctions.js'
-import {printPage} from './Page.js'
+import {Lines} from './Page.js'
 import {useInterval} from './utilities.js'
 
 function TextBox()
@@ -32,7 +31,7 @@ function TextBox()
     useInterval(() => {
         (caretOn) ? showCaret(false) :
             showCaret(true)
-    }, 500, timerOn)
+    }, 500, false)
 
     useEffect(() => {
         setTimer(true)
@@ -49,7 +48,7 @@ function TextBox()
         showCaret
     ]
 
-    const printPageParam = [
+    const linesParam = [
         line,
         lIdx,
         wIdx,
@@ -57,7 +56,6 @@ function TextBox()
         paraRef,
         cursorRef,
         caretOn,
-        showCaret,
     ]
 
     return (
@@ -67,7 +65,7 @@ function TextBox()
                 e,
                 ...KeyPressParam 
             )}>
-                {printPage(printPageParam)}
+                <Lines linesProp={linesParam} />
         </div>
     )
 }

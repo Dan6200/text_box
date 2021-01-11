@@ -95,22 +95,28 @@ function updateLine(e, line, lIdx, wIdx) {
 
 function Backspace(obj) {
     let {
-        line, 
-        lIdx,
-        wIdx
-    } = obj;
+        line: newLine,
+        lIdx: newLIdx,
+        wIdx: newWIdx
+    } = obj
 
-    if (wIdx > -1 && line[lIdx].length > 0) 
+    if (newWIdx > -1 && newLine[newLIdx].length > 0) 
     {
-        line[lIdx].splice(wIdx,1)
-        wIdx-- 
+        newLine[newLIdx].splice(newWIdx,1)
+        newWIdx-- 
     }
-    else
-        if (lIdx) lIdx--
+    else {
+        if (newLIdx) 
+        {
+            newLine.splice(newLIdx, 1)
+            newLIdx--
+            newWIdx = newLine[newLIdx].length
+        }
+    }
     return {
-        newLine: line,
-        newLIdx: lIdx,
-        newWIdx: wIdx
+        newLine,
+        newLIdx,
+        newWIdx
     }
 }
 
