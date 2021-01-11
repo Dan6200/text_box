@@ -21,6 +21,8 @@ function TextBox()
     const [caretOn, showCaret] = useState(false)
 
     const [timerOn, setTimer] = useState(true)
+    
+    const [wordWrap, setWrap] = useState(true)
 
     const textRef = useRef()
 
@@ -34,20 +36,16 @@ function TextBox()
 
     const paraWidth = paraRef.current ? paraRef.current.clientWidth : 1000
 
-    const boxPadding = parseInt(txtBoxRef.current ? 
-        window.getComputedStyle(txtBoxRef.current).getPropertyValue("padding") : '0px')
-
-    console.log(spanWidth, paraWidth, boxPadding, paraRef)
-
     useEffect(() => {   // Hooks is called twice fix this!
-        if (spanWidth >= paraWidth - boxPadding) {
+        if (wordWrap && spanWidth >= paraWidth) {
             const newLine = cpyMatrix(line)
             newLine.splice(lIdx+1, 0, [])
             setLine(newLine)
-            setLIdx(lIdx+1)
+            setLIdx(lIdx + 1)
             setWIdx(0)
+            console.log("I run once")
         }
-    }, [line, lIdx, wIdx])
+    }, [spanWidth, wordWrap])
 
     useInterval(() => {
         (caretOn) ? showCaret(false) :
@@ -66,7 +64,8 @@ function TextBox()
         wIdx,
         setWIdx,
         setTimer,
-        showCaret
+        showCaret, 
+        setWrap
     ]
 
     const linesParam = [
