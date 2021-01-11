@@ -4,8 +4,7 @@
 //////////////////////////////////////////////////////////////////////////////////////////////////
 
 
-import React, { useState, useRef, useEffect } from 'react'            
-import ReactDOM from 'react-dom'
+import React, { useState, useRef, useEffect } from 'react'
 import handleKeyPress from './KeyFunctions.js'
 import {Lines} from './Page.js'
 import {useInterval, cpyMatrix} from './utilities.js'
