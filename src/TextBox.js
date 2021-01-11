@@ -45,8 +45,6 @@ function TextBox()
         setLIdx,
         wIdx,
         setWIdx,
-        textRef,
-        paraRef,
         setTimer,
         showCaret
     ]
@@ -60,8 +58,6 @@ function TextBox()
         cursorRef,
         caretOn,
         showCaret,
-        timerOn,
-        setTimer
     ]
 
     return (

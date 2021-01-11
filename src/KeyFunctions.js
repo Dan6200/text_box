@@ -5,41 +5,44 @@
 const cpyMatrix = array => array.map(elem => [...elem])
 
 export default function handleKeyPress 
-    (e, line, setLine, lIdx, setLIdx, wIdx, setWIdx, textRef, paraRef, setTimer, showCaret)  
+    (e, line, setLine, lIdx, setLIdx, wIdx, setWIdx, setTimer, showCaret)  
 {
     try {
         /// Stops the caret from blinking...
         showCaret(true)
         setTimer(false)
+
+        let values = {
+                newLine: [],
+                newLIdx: 0,
+                newWIdx: 0
+        }
+
+        let setters = {
+            setLine,
+            setLIdx,
+            setWIdx
+        }
+
         switch (e.key) {
             case "Backspace":
-            { // Calls the Function that handles backspaces 
-                const {           // Declare new state values...
-                    nLine,
-                    nLIdx,
-                    nWIdx
-                } = Backspace({   /// Modify state values...
+             // Calls the Function that handles backspaces 
+                // Declare new state values...
+                values = Backspace({   /// Modify state values...
                     line: cpyMatrix(line),
                     lIdx,
                     wIdx
                 })
                 /// Update state values...
-                setLine(nLine)
-                setLIdx(nLIdx)
-                setWIdx(nWIdx)
+                updateState(values, setters)
                 break
-            }
             case " ":
-            {
             // Calls the fucntion that handles input from the spacebar
                 /// Modify state values...
-                const {nLine, nLIdx, nWIdx} = spaceBar(e, {line: cpyMatrix(line), lIdx, wIdx})
+                values = spaceBar(e, {line: cpyMatrix(line), lIdx, wIdx})
                 /// Update state values...
-                setLine(nLine)
-                setLIdx(nLIdx)
-                setWIdx(nWIdx)
+                updateState(values, setters)
                 break
-            }
             case "ArrowLeft":
                 if (wIdx >= 0)
                     setWIdx(wIdx - 1)
@@ -48,14 +51,16 @@ export default function handleKeyPress
                 if (wIdx < line[lIdx].length)
                     setWIdx(wIdx + 1)
                 break
+            case "Enter":
+                values = handleEnterKey({line: cpyMatrix(line), lIdx, wIdx})
+                updateState(values, setters)
+                break
             default:
             /// Modify state values...
-                const {nLine, nLIdx, nWIdx} = 
-                    updateLine(e, cpyMatrix(line), lIdx, wIdx)
+                values = updateLine(e, cpyMatrix(line), lIdx, wIdx)
                 /// Update state values...
-                setLine(nLine)
-                setLIdx(nLIdx)
-                setWIdx(nWIdx)
+                updateState(values, setters)
+                console.log(line, lIdx, wIdx)
             }
     }
     catch (e) {
@@ -68,9 +73,9 @@ function spaceBar(e, {line, lIdx, wIdx}) {
     e.preventDefault()
     line[lIdx].splice(wIdx+1,0,'\x20\u200c')
     return {
-        nLine: line,
-        nLIdx: lIdx,
-        nWIdx: wIdx + 1
+        newLine: line,
+        newLIdx: lIdx,
+        newWIdx: wIdx + 1
     }
 }
 
@@ -82,9 +87,9 @@ function updateLine(e, line, lIdx, wIdx) {
         wIdx++
     }
     return {
-        nLine: line,
-        nLIdx: lIdx,
-        nWIdx: wIdx 
+        newLine: line,
+        newLIdx: lIdx,
+        newWIdx: wIdx 
     }
 }
 
@@ -103,8 +108,31 @@ function Backspace(obj) {
     else
         if (lIdx) lIdx--
     return {
-        nLine: line,
-        nLIdx: lIdx,
-        nWIdx: wIdx
+        newLine: line,
+        newLIdx: lIdx,
+        newWIdx: wIdx
     }
 }
+
+function updateState(values, setters)
+{
+    const {newLine, newLIdx, newWIdx} = values
+    const {setLine, setLIdx, setWIdx} = setters
+
+    setLine(newLine)
+    setLIdx(newLIdx)
+    setWIdx(newWIdx)
+}
+
+function handleEnterKey(obj) 
+{
+    const {line, lIdx} = obj
+    line.splice(lIdx + 1, 0, [])
+    return {
+        newLine: line,
+        newLIdx: lIdx + 1,
+        newWIdx: 0
+    }
+}
+
+

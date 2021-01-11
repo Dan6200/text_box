@@ -1,5 +1,5 @@
 import React  from 'react'
-
+import {keyGen} from './utilities.js'
 
 const Cursor = props => {
     return (<i id='cursor' ref = {props.myRef} style = {props.blinker()}></i>)
@@ -28,9 +28,9 @@ export const printPage = ([line, lIdx, wIdx, textRef, paraRef, cursorRef, caretO
             if (index === lIdx) 
                 elem = printCaret(line[lIdx], wIdx, {textRef, cursorRef, caretOn})
             return (
-                <p className='Text' 
-                    id='normal-text' 
-                    key={elem[wIdx]+lIdx}
+                <p className='normal-text' 
+                    id={'line-'+lIdx} 
+                    key={keyGen()} // Generates two primes and uses their product as keys
                 ref={paraRef}>
                     {elem}
                 </p>
