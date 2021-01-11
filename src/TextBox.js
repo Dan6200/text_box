@@ -32,11 +32,11 @@ function TextBox()
     useInterval(() => {
         (caretOn) ? showCaret(false) :
             showCaret(true)
-    }, 500, timerOn)
+    }, 5000, timerOn)
 
     useEffect(() => {
         setTimer(true)
-    }, [line])
+    }, [line, lIdx, wIdx])
 
     const KeyPressParam = [
         line, 

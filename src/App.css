@@ -15,29 +15,35 @@ html, body {
 }
 
 #txtbox {
-  display: block;
-  height: 80vh;
-  border: 1px solid #a9a9a9;
-  box-shadow: 3px 3px 3px #606060;
-  width: 70vw;
-  margin: 5em auto;
-  padding: 5em;
-  background-color: white;
+    display: block;
+    position: relative;
+    height: 80em;
+    border: 1px solid #a9a9a9;
+    box-shadow: 3px 3px 3px #606060;
+    width: 70em;
+    margin: 5em auto;
+    padding: 5em;
+    background-color: white;
+    z-index: 0;
 }
 
-#txtbox p {
+p {
     font-family: sans-serif;
-    font-size: 2.1em;
+    font-size: 1.8em;
     display: inline-block;
     height: 2.3em;
     width: 100%;
     line-height: 2.3em;
     letter-spacing: .1px;
+    margin: 0;
+    padding: 0;
+    padding-bottom: 1em;
 }
 
-#txtbox p span {
+p span {
     display: inline-block;
-    height: 2em;
+    position: relative;
+    height: 100%;
 }
 
 #txtbox:focus { 
@@ -45,12 +51,18 @@ html, body {
     border: none;
 }
 
-i#cursor {
-    position: relative;
-    top: .2em;
+span .cursor {
+    position: absolute;
+    display: inline-block;
+    top: .4em;
     height: 1.4em;
     width: 0;
     border-color: #000000;
     border-style: none solid none none;
     border-width: .15em;
+    z-index: 10;
+}
+
+.hide {
+    display: none;
 }
