@@ -32,7 +32,7 @@ function TextBox()
     useInterval(() => {
         (caretOn) ? showCaret(false) :
             showCaret(true)
-    }, 5000, timerOn)
+    }, 500, timerOn)
 
     useEffect(() => {
         setTimer(true)
