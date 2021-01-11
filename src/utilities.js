@@ -16,6 +16,80 @@ export const useInterval = (func, delay, start) => {
 	
 }
 
+export const cpyMatrix = array => array.map(elem => [...elem])
+
+export function spaceBar(e, {line, lIdx, wIdx}) {
+    e.preventDefault()
+    line[lIdx].splice(wIdx+1,0,'\x20\u200c')
+    return {
+        newLine: line,
+        newLIdx: lIdx,
+        newWIdx: wIdx + 1
+    }
+}
+
+export function updateLine(e, line, lIdx, wIdx) {
+    e.preventDefault()
+    if (e.key.length === 1) 
+    {
+        line[lIdx].splice(wIdx+1,0,e.key)
+        wIdx++
+    }
+    return {
+        newLine: line,
+        newLIdx: lIdx,
+        newWIdx: wIdx 
+    }
+}
+
+export function Backspace(obj) {
+    let {
+        line: newLine,
+        lIdx: newLIdx,
+        wIdx: newWIdx
+    } = obj
+
+    if (newWIdx > -1 && newLine[newLIdx].length > 0) 
+    {
+        newLine[newLIdx].splice(newWIdx,1)
+        newWIdx-- 
+    }
+    else {
+        if (newLIdx) 
+        {
+            newLine.splice(newLIdx, 1)
+            newLIdx--
+            newWIdx = newLine[newLIdx].length
+        }
+    }
+    return {
+        newLine,
+        newLIdx,
+        newWIdx
+    }
+}
+
+export function updateState(values, setters)
+{
+    const {newLine, newLIdx, newWIdx} = values
+    const {setLine, setLIdx, setWIdx} = setters
+
+    setLine(newLine)
+    setLIdx(newLIdx)
+    setWIdx(newWIdx)
+}
+
+export function handleEnterKey(obj) 
+{
+    const {line, lIdx} = obj
+    line.splice(lIdx + 1, 0, [])
+    return {
+        newLine: line,
+        newLIdx: lIdx + 1,
+        newWIdx: 0
+    }
+}
+
 const primes = [2]
 const primeGen = () => {
     const last = primes.length - 1

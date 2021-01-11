@@ -5,9 +5,10 @@
 
 
 import React, { useState, useRef, useEffect } from 'react'            
+import ReactDOM from 'react-dom'
 import handleKeyPress from './KeyFunctions.js'
 import {Lines} from './Page.js'
-import {useInterval} from './utilities.js'
+import {useInterval, cpyMatrix} from './utilities.js'
 
 function TextBox()
 {
@@ -23,15 +24,36 @@ function TextBox()
     const [timerOn, setTimer] = useState(true)
 
     const textRef = useRef()
+
+    const txtBoxRef = useRef()
    
     const paraRef = useRef()
 
     const cursorRef = useRef()
 
+    const spanWidth = (textRef.current) ? textRef.current.offsetWidth : 100
+
+    const paraWidth = paraRef.current ? paraRef.current.clientWidth : 1000
+
+    const boxPadding = parseInt(txtBoxRef.current ? 
+        window.getComputedStyle(txtBoxRef.current).getPropertyValue("padding") : '0px')
+
+    console.log(spanWidth, paraWidth, boxPadding, paraRef)
+
+    useEffect(() => {   // Hooks is called twice fix this!
+        if (spanWidth >= paraWidth - boxPadding) {
+            const newLine = cpyMatrix(line)
+            newLine.splice(lIdx+1, 0, [])
+            setLine(newLine)
+            setLIdx(lIdx+1)
+            setWIdx(0)
+        }
+    }, [line, lIdx, wIdx])
+
     useInterval(() => {
         (caretOn) ? showCaret(false) :
             showCaret(true)
-    }, 500, false)
+    }, 500, timerOn)
 
     useEffect(() => {
         setTimer(true)
@@ -61,6 +83,7 @@ function TextBox()
     return (
         <div id="txtbox" 
             tabIndex="0" 
+            ref = {txtBoxRef}
             onKeyDown={(e) => handleKeyPress(
                 e,
                 ...KeyPressParam 
