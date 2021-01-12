@@ -11,7 +11,6 @@ export default function handleKeyPress
         /// Stops the caret from blinking...
         showCaret(true)
         setTimer(false)
-        setWrap(false)     // disable text wrapping
 
         let values = {
                 newLine: [],
@@ -39,7 +38,6 @@ export default function handleKeyPress
                 break
             case " ":
             // Calls the fucntion that handles input from the spacebar
-                setWrap(true)           // Enable text wrapping
                 /// Modify state values...
                 values = spaceBar(e, {line: cpyMatrix(line), lIdx, wIdx})
                 /// Update state values...
