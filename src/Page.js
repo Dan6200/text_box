@@ -8,16 +8,19 @@ const Cursor = props => {
 const blinker = isOn => (isOn) ? 'cursor' : 'hide'
 
 const printCaret = (array, curIdx, {textRef, cursorRef, caretOn, setTimer}) => {
-    const displayedText  = [...array]
-    displayedText.splice(
-        curIdx + 1, 
-        0, 
+    let displayedText  = []
+
+    displayedText = array.slice(0, curIdx) 
+    displayedText = [displayedText.join('')]
+    displayedText.push(
         <Cursor 
             myRef={cursorRef}
             blinker={() => blinker(caretOn)} 
             key={'caret'+curIdx+1}
         />
     )
+    displayedText.push(array.slice(curIdx))
+
     return displayedText 
 }
 
