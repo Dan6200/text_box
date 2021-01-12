@@ -8,7 +8,7 @@ import React, { useState, useRef, useEffect } from 'react'
 import handleKeyPress from './KeyFunctions.js'
 import {Lines} from './Page.js'
 import {useInterval, cpyMatrix} from './utilities.js'
-
+let counter = 0
 function TextBox()
 {
     /// Manages the state of the lines on the screen
@@ -52,7 +52,7 @@ function TextBox()
         }
     }, [spanWidth, wordWrap])
 
-    useInterval(() => {
+    useInterval(() => { // Controls the blinking of the timer
         (caretOn) ? showCaret(false) :
             showCaret(true)
     }, 500, !timerOn)
@@ -92,6 +92,7 @@ function TextBox()
                 ...KeyPressParam 
             )}>
                 <Lines linesProp={linesParam} />
+                {console.log("I run this many times " + counter++)}
         </div>
     )
 }

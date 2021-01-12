@@ -9,7 +9,6 @@ import {
     updateLine, 
     spaceBar, 
     handleEnterKey, 
-    primeGen
 } from './utilities.js'
 
 export default function handleKeyPress 
@@ -59,10 +58,17 @@ export default function handleKeyPress
                 if (wIdx < line[lIdx].length)
                     setWIdx(wIdx + 1)
                 break
+             case "ArrowUp":
+                if (lIdx >= 0)
+                    setLIdx(lIdx - 1)
+                break
+            case "ArrowDown":
+                if (lIdx < line.length)
+                    setLIdx(lIdx + 1)
+                break
             case "Enter":
                 values = handleEnterKey({line: cpyMatrix(line), lIdx, wIdx})
                 updateState(values, setters)
-                primeGen()      // Generate new keys
                 break
             default:
             /// Modify state values...

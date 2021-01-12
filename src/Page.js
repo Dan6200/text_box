@@ -34,7 +34,7 @@ export const Lines = props => {
             return (
                 <p className='normal-text' 
                     id={'line-'+ index} 
-                    key={uuid()} // Generates the product of two primes to be used as keys
+                    key={uuid()} 
                 ref={paraRef}>
                     <span ref={textRef}>
                         {elem}
