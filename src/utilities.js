@@ -89,29 +89,3 @@ export function handleEnterKey(obj)
         newWIdx: 0
     }
 }
-
-let primes = [2]
-
-export const primeGen = () => {
-    const last = primes.length - 1
-    let n = primes[last] + 1
-    for(let i=0; i < last+1;)
-    {
-        let p = primes[i]
-        if (n % p === 0)
-        {
-            n++
-            i=0
-        }
-        else
-            i++
-    }
-    primes.push(n)
-    console.log(primes)
-    return primes
-}
-
-export const keyGen = () => {
-    const N = 5557          // prime number
-    return primes.map(i => N * i)  // return the two primes product as key
-}

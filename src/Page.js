@@ -1,5 +1,5 @@
 import React, {useEffect}  from 'react'
-import {keyGen} from './utilities.js'
+import { uuid } from 'uuidv4'
 
 const Cursor = props => {
     return (<span id='cursor' ref = {props.myRef} className = {props.blinker()}></span>)
@@ -34,7 +34,7 @@ export const Lines = props => {
             return (
                 <p className='normal-text' 
                     id={'line-'+ index} 
-                    key={keyGen()[index]} // Generates the product of two primes to be used as keys
+                    key={uuid()} // Generates the product of two primes to be used as keys
                 ref={paraRef}>
                     <span ref={textRef}>
                         {elem}
