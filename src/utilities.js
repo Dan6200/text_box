@@ -90,8 +90,9 @@ export function handleEnterKey(obj)
     }
 }
 
-const primes = [2]
-const primeGen = () => {
+let primes = [2]
+
+export const primeGen = () => {
     const last = primes.length - 1
     let n = primes[last] + 1
     for(let i=0; i < last+1;)
@@ -106,10 +107,11 @@ const primeGen = () => {
             i++
     }
     primes.push(n)
-    return primes[last]
+    console.log(primes)
+    return primes
 }
 
 export const keyGen = () => {
     const N = 5557          // prime number
-    return N * primeGen()   // return the two primes product as key
+    return primes.map(i => N * i)  // return the two primes product as key
 }

@@ -1,4 +1,4 @@
-import React  from 'react'
+import React, {useEffect}  from 'react'
 import {keyGen} from './utilities.js'
 
 const Cursor = props => {
@@ -26,6 +26,7 @@ const printCaret = (array, curIdx, {textRef, cursorRef, caretOn, setTimer}) => {
 
 export const Lines = props => {
     const [line, lIdx, wIdx, textRef, paraRef, cursorRef, caretOn] = props.linesProp
+
     return (
         line.map((elem, index) => {
             if (index === lIdx) 
@@ -33,7 +34,7 @@ export const Lines = props => {
             return (
                 <p className='normal-text' 
                     id={'line-'+ index} 
-                    key={keyGen()} // Generates the product of two primes to be used as keys
+                    key={keyGen()[index]} // Generates the product of two primes to be used as keys
                 ref={paraRef}>
                     <span ref={textRef}>
                         {elem}

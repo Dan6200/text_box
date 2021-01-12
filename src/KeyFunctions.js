@@ -2,7 +2,15 @@
 //////////       This file handles all Keyboard operations //////////
 /////////////////////////////////////////////////////////////////////
 
-import {cpyMatrix, Backspace, updateState, updateLine, spaceBar, handleEnterKey} from './utilities.js'
+import {
+    cpyMatrix, 
+    Backspace, 
+    updateState, 
+    updateLine, 
+    spaceBar, 
+    handleEnterKey, 
+    primeGen
+} from './utilities.js'
 
 export default function handleKeyPress 
     (e, line, setLine, lIdx, setLIdx, wIdx, setWIdx, setTimer, showCaret, setWrap)  
@@ -54,6 +62,7 @@ export default function handleKeyPress
             case "Enter":
                 values = handleEnterKey({line: cpyMatrix(line), lIdx, wIdx})
                 updateState(values, setters)
+                primeGen()      // Generate new keys
                 break
             default:
             /// Modify state values...
