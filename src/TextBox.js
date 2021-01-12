@@ -36,14 +36,19 @@ function TextBox()
 
     const paraWidth = paraRef.current ? paraRef.current.clientWidth : 1000
 
-    useEffect(() => {   
-        if (wordWrap && spanWidth >= paraWidth) {
+    useEffect(() => {  // Controls the text Wrapping Effect 
+        if (wordWrap && spanWidth >= paraWidth-10) {
             const newLine = cpyMatrix(line)
-            newLine.splice(lIdx+1, 0, [])
+            let lastWord = []
+            let array = newLine[lIdx] 
+            let i= array.length-1
+            while (array[i] !== '\x20\u200c' && i >= 0) i--
+            if (i > 0) 
+                lastWord = array.splice(i, array.length - i + 1)
+            newLine.splice(lIdx+1, 0, lastWord)
             setLine(newLine)
             setLIdx(lIdx + 1)
-            setWIdx(0)
-            console.log("I run once")
+            setWIdx(lastWord.length)
         }
     }, [spanWidth, wordWrap])
 
