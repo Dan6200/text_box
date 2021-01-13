@@ -51,7 +51,7 @@ function TextBox()
             setLine(newLine)
             setLIdx(l => l + 1)
             setWIdx(lastWord.length)
-            console.log("I'm supposed to run once")
+            alert("I'm supposed to run once")
         }
     }, [spanWidth, wordWrap, line, lIdx, paraWidth])
 
