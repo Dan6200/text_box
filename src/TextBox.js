@@ -37,7 +37,7 @@ function TextBox()
     const spanWidth = (textRef.current) ? textRef.current.offsetWidth : 100
 
     const paraWidth = paraRef.current ? paraRef.current.clientWidth : 1000
-
+/*
     useEffect(() => {  // Controls the text Wrapping Effect 
         if (wordWrap && spanWidth >= paraWidth-10) {
             const newLine = cpyMatrix(line)
@@ -63,7 +63,7 @@ function TextBox()
     useEffect(() => {
         setTimer(true)
     }, [line, lIdx, wIdx])
-
+*/
     const KeyPressParam = [
         line, 
         setLine, 
