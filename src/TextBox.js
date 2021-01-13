@@ -55,7 +55,7 @@ function TextBox()
     useInterval(() => { // Controls the blinking of the timer
         (caretOn) ? showCaret(false) :
             showCaret(true)
-    }, 500, !timerOn)
+    }, 500, timerOn)
 
     useEffect(() => {
         setTimer(true)
