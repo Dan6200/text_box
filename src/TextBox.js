@@ -49,15 +49,16 @@ function TextBox()
                 lastWord = array.splice(i, array.length - i + 1)
             newLine.splice(lIdx+1, 0, lastWord)
             setLine(newLine)
-            setLIdx(lIdx + 1)
+            setLIdx(l => l + 1)
             setWIdx(lastWord.length)
+            console.log("I'm supposed to run once")
         }
-    }, [spanWidth, wordWrap])
+    }, [spanWidth, wordWrap, line, lIdx, paraWidth])
 
     useInterval(() => { // Controls the blinking of the timer
         (caretOn) ? showCaret(false) :
             showCaret(true)
-    }, 500, timerOn)
+    }, 500, !timerOn)
 
     useEffect(() => {
         setTimer(true)
