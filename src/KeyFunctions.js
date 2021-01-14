@@ -16,8 +16,10 @@ export default function handleKeyPress
 {
     try {
         /// Stops the caret from blinking...
-        showCaret(true)
-        setTimer(false)
+            showCaret(true)
+            setTimer(false)
+            // Enable text wrap
+            setWrap(true)
 
         let values = {
                 newLine: [],
@@ -77,7 +79,7 @@ export default function handleKeyPress
                 updateState(values, setters)
             }
     }
-    catch (e) {
+        catch (e) {
         console.info(e)
         console.log(line, lIdx, wIdx)
     }

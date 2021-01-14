@@ -37,7 +37,9 @@ function TextBox()
     const spanWidth = (textRef.current) ? textRef.current.offsetWidth : 100
 
     const paraWidth = paraRef.current ? paraRef.current.clientWidth : 1000
-    
+   
+    let ranAlready = useRef(false)
+
     useEffect(() => {  // Controls the text Wrapping Effect 
         if (wordWrap && spanWidth >= paraWidth-10) {
             const newLine = cpyMatrix(line)
@@ -51,7 +53,7 @@ function TextBox()
             setLine(newLine)
             setLIdx(l => l + 1)
             setWIdx(lastWord.length)
-            alert("I'm supposed to run once")
+            setWrap(false) // Block it from async-ly re-runnoing while the initial consition is still true
         }
     }, [spanWidth, wordWrap, line, lIdx, paraWidth])
 
@@ -64,7 +66,7 @@ function TextBox()
     useEffect(() => {
         setTimer(true)
     }, [line, lIdx, wIdx])
-    
+   
     const KeyPressParam = [
         line, 
         setLine, 
