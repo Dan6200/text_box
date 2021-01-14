@@ -33,12 +33,11 @@ export function updateLine(e, line, lIdx, wIdx) {
     if (e.key.length === 1) 
     {
         line[lIdx].splice(wIdx+1,0,e.key)
-        wIdx++
     }
     return {
         newLine: line,
         newLIdx: lIdx,
-        newWIdx: wIdx 
+        newWIdx: wIdx + 1
     }
 }
 
