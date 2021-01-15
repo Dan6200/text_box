@@ -1,5 +1,4 @@
 import React from 'react'
-import uuid from 'react-uuid'
 
 const areEq = (preProps, postProps) => preProps === postProps
 
@@ -33,10 +32,11 @@ export const Lines = React.memo(props => {
         line.map((elem, index) => {
             if (index === lIdx) 
                 elem = printCaret(line[lIdx], wIdx, {textRef, cursorRef, caretOn})
+            else elem = elem.join('')
             return (
                 <p className='normal-text' 
                     id={'line-'+ index} 
-                    key={uuid()} 
+                    key={index.toString()} 
                 ref={paraRef}>
                     <span ref={textRef}>
                         {elem}
