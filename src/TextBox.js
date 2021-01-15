@@ -10,7 +10,6 @@ import {Lines} from './Page.js'
 import {useInterval, cpyMatrix} from './utilities.js'
 
 
-let counter = 0
 function TextBox()
 {
     /// Manages the state of the lines on the screen
