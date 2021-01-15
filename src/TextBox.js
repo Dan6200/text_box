@@ -58,8 +58,7 @@ function TextBox()
     useInterval(() => { // Controls the blinking of the timer
         (caretOn) ? showCaret(false) :
             showCaret(true)
-        console.log("I run this many times, too " +counter++)
-    }, 500, !timerOn)
+    }, 500, timerOn)
 
     useEffect(() => {
         setTimer(true)
@@ -96,7 +95,6 @@ function TextBox()
                 ...KeyPressParam 
             )}>
                 <Lines linesProp={linesParam} />
-                {console.log("I run this many times " + counter++)}
         </div>
     )
 }
