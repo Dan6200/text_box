@@ -5,7 +5,7 @@ const areEq = (preProps, postProps) => preProps === postProps
 
 const Cursor = React.memo(props => {
     return (<span id='cursor' ref = {props.myRef} className = {props.blinker()}></span>)
-})
+}, areEq)
 
 const blinker = isOn => (isOn) ? 'cursor' : 'hide'
 

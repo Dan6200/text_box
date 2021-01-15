@@ -18,7 +18,7 @@ export const useInterval = (func, delay, start) => {
 
 export function spaceBar(e, {line, lIdx, wIdx}) {
     e.preventDefault()
-    line[lIdx].splice(wIdx+1,0,'\x20\u200c')
+    line[lIdx].splice(wIdx,0,'\x20\u200c')
     return {
         newLine: line,
         newLIdx: lIdx,
@@ -30,7 +30,7 @@ export function updateLine(e, line, lIdx, wIdx) {
     e.preventDefault()
     if (e.key.length === 1) 
     {
-        line[lIdx].splice(wIdx+1,0,e.key)
+        line[lIdx].splice(wIdx,0,e.key)
     }
     return {
         newLine: line,
@@ -78,8 +78,10 @@ export function updateState(values, setters)
 
 export function handleEnterKey(obj) 
 {
-    const {line, lIdx} = obj
-    line.splice(lIdx + 1, 0, [])
+    const {line, lIdx, wIdx} = obj
+    const nl = line[lIdx].slice(wIdx)
+    line[lIdx] = line[lIdx].slice(0, wIdx)
+    line.splice(lIdx + 1, 0, nl)
     return {
         newLine: line,
         newLIdx: lIdx + 1,
