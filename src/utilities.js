@@ -50,7 +50,7 @@ export function Backspace(obj) {
 
     if (newWIdx > -1 && newLine[newLIdx].length > 0) 
     {
-        newLine[newLIdx].splice(newWIdx,1)
+        newLine[newLIdx].splice(newWIdx-1,1)
         newWIdx-- 
     }
     else {

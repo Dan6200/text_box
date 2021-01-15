@@ -42,6 +42,7 @@ export default function handleKeyPress
                     lIdx,
                     wIdx
                 })
+                console.log(line)
                 /// Update state values...
                 updateState(values, setters)
                 break
