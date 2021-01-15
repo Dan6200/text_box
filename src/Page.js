@@ -20,7 +20,7 @@ const printCaret = (array, curIdx, {textRef, cursorRef, caretOn, setTimer}) => {
             key={'caret'+curIdx+1}
         />
     )
-    displayedText.push(array.slice(curIdx))
+    displayedText.push(array.slice(curIdx).join(''))
 
     return displayedText 
 }
