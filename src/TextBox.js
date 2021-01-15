@@ -37,8 +37,6 @@ function TextBox()
     const spanWidth = (textRef.current) ? textRef.current.offsetWidth : 100
 
     const paraWidth = paraRef.current ? paraRef.current.clientWidth : 1000
-   
-    let ranAlready = useRef(false)
 
     useEffect(() => {  // Controls the text Wrapping Effect 
         if (wordWrap && spanWidth >= paraWidth-10) {
