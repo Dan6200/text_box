@@ -3,7 +3,6 @@
 /////////////////////////////////////////////////////////////////////
 
 import {
-    cpyMatrix, 
     Backspace, 
     updateState, 
     updateLine, 
@@ -38,7 +37,7 @@ export default function handleKeyPress
              // Calls the Function that handles backspaces 
                 // Declare new state values...
                 values = Backspace({   /// Modify state values...
-                    line: cpyMatrix(line),
+                    line: line,
                     lIdx,
                     wIdx
                 })
@@ -49,7 +48,7 @@ export default function handleKeyPress
             case " ":
             // Calls the fucntion that handles input from the spacebar
                 /// Modify state values...
-                values = spaceBar(e, {line: cpyMatrix(line), lIdx, wIdx})
+                values = spaceBar(e, {line: line, lIdx, wIdx})
                 /// Update state values...
                 updateState(values, setters)
                 break
@@ -70,12 +69,12 @@ export default function handleKeyPress
                     setLIdx(lIdx + 1)
                 break
             case "Enter":
-                values = handleEnterKey({line: cpyMatrix(line), lIdx, wIdx})
+                values = handleEnterKey({line: line, lIdx, wIdx})
                 updateState(values, setters)
                 break
             default:
             /// Modify state values...
-                values = updateLine(e, cpyMatrix(line), lIdx, wIdx)
+                values = updateLine(e, line, lIdx, wIdx)
                 /// Update state values...
                 updateState(values, setters)
             }

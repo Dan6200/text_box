@@ -1,9 +1,11 @@
 import React from 'react'
-import { uuid } from 'uuidv4'
+import uuid from 'react-uuid'
 
-const Cursor = props => {
+const areEq = (preProps, postProps) => preProps === postProps
+
+const Cursor = React.memo(props => {
     return (<span id='cursor' ref = {props.myRef} className = {props.blinker()}></span>)
-}
+})
 
 const blinker = isOn => (isOn) ? 'cursor' : 'hide'
 
@@ -24,7 +26,7 @@ const printCaret = (array, curIdx, {textRef, cursorRef, caretOn, setTimer}) => {
     return displayedText 
 }
 
-export const Lines = props => {
+export const Lines = React.memo(props => {
     const [line, lIdx, wIdx, textRef, paraRef, cursorRef, caretOn] = props.linesProp
 
     return (
@@ -43,4 +45,4 @@ export const Lines = props => {
             )
         })
     )
-}
+}, areEq)

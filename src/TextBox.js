@@ -7,7 +7,7 @@
 import React, { useState, useRef, useEffect } from 'react'
 import handleKeyPress from './KeyFunctions.js'
 import {Lines} from './Page.js'
-import {useInterval, cpyMatrix} from './utilities.js'
+import {useInterval} from './utilities.js'
 
 
 function TextBox()
@@ -39,7 +39,7 @@ function TextBox()
 
     useEffect(() => {  // Controls the text Wrapping Effect 
         if (wordWrap && spanWidth >= paraWidth-10) {
-            const newLine = cpyMatrix(line)
+            const newLine = line
             let lastWord = []
             let array = newLine[lIdx] 
             let i= array.length-1
@@ -50,7 +50,7 @@ function TextBox()
             setLine(newLine)
             setLIdx(l => l + 1)
             setWIdx(lastWord.length)
-            setWrap(false) // Block it from async-ly re-runnoing while the initial consition is still true
+            setWrap(false) // Block it from async-ly re-running while the initial consition is still true
         }
     }, [spanWidth, wordWrap, line, lIdx, paraWidth])
 

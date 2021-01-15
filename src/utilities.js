@@ -16,8 +16,6 @@ export const useInterval = (func, delay, start) => {
 	
 }
 
-export const cpyMatrix = array => array.map(elem => [...elem])
-
 export function spaceBar(e, {line, lIdx, wIdx}) {
     e.preventDefault()
     line[lIdx].splice(wIdx+1,0,'\x20\u200c')
