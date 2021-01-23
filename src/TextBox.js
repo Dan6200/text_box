@@ -4,8 +4,8 @@
 //////////////////////////////////////////////////////////////////////////////////////////////////
 
 
-import React, { useState, useRef, useEffect } from 'react'
-import handleKeyPress from './KeyFunctions.js'
+import React, { useState, useRef, useEffect, useReducer } from 'react'
+import reducer from './KeyFunctions.js'
 import {Lines} from './Page.js'
 import {useInterval} from './utilities.js'
 

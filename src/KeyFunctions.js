@@ -11,7 +11,7 @@ import {
     handleWrap,
 } from './utilities.js'
 
-export default function reducer(state, action)
+export default function modifier(state, action)
 {
     try {
         /// Stops the caret from blinking...
