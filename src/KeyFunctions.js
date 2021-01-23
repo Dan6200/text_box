@@ -8,6 +8,7 @@ import {
     updateLine, 
     spaceBar, 
     handleEnterKey, 
+    handleWrap,
 } from './utilities.js'
 
 export default function reducer(state, action)
@@ -31,6 +32,7 @@ export default function reducer(state, action)
                 lIdx: val.lIdx, wIdx: val.wIdx})
 
         switch (action.type)
+        {
             case "Backspace":
              // Calls the Function that handles backspaces 
                 // Declare new state values...
@@ -44,7 +46,7 @@ export default function reducer(state, action)
             case " ":
             // Calls the fucntion that handles input from the spacebar
                 /// Modify state values...
-                values = spaceBar(e, {line: state.line, state.lIdx, state.wIdx})
+                values = spaceBar(e, {line: state.line, lIdx: state.lIdx, wIdx: state.wIdx})
                 /// Update state values...
                 return set(values)
             case "ArrowLeft":
@@ -62,15 +64,15 @@ export default function reducer(state, action)
                     return { ...state, ...caretState, lIdx: state.lIdx + 1}
                 break
             case "Enter":
-                values = handleEnterKey({line: state.line, state.lIdx, state.wIdx})
+                values = handleEnterKey({line: state.line, lIdx: state.lIdx, wIdx: state.wIdx})
                 return set(values)
             case "text_wrap":
-                values = TextWrap ({line: state.line, lIdx: state.lIdx, wIdx: state.wIdx,
+                values = handleWrap ({line: state.line, lIdx: state.lIdx, wIdx: state.wIdx,
                 wordWrap: state.wordWrap})
                 return {...state, ...values}
             default:
             /// Modify state values...
-                values = updateLine(e, {line: state.line, state.lIdx, state.wIdx})
+                values = updateLine(e, {line: state.line, lIdx: state.lIdx, wIdx: state.wIdx})
                 /// Update state values...
                 return set(values)
             }

@@ -24,6 +24,10 @@ function TextBox()
         wordWrap: true,
     }
 
+    const [state, dispatch] = useReducer(reducer, AppState)
+
+    const {line, lIdx, wIdx, caretOn, timerOn, wordWrap} = state;
+
     const textRef = useRef()
 
     const txtBoxRef = useRef()
@@ -38,18 +42,7 @@ function TextBox()
 
     useEffect(() => {  // Controls the text Wrapping Effect 
         if (wordWrap && spanWidth >= paraWidth-10) {
-            const newLine = line
-            let lastWord = []
-            let array = newLine[lIdx] 
-            let i= array.length-1
-            while (array[i] !== '\x20\u200c' && i >= 0) i--
-            if (i > 0) 
-                lastWord = array.splice(i, array.length - i + 1)
-            newLine.splice(lIdx+1, 0, lastWord)
-            setLine(newLine)
-            setLIdx(l => l + 1)
-            setWIdx(lastWord.length)
-            setWrap(false) // Block it from async-ly re-running while the initial consition is still true
+            dispatch({type: "text_wrap"})
         }
     }, [spanWidth, wordWrap, line, lIdx, paraWidth])
 
@@ -76,7 +69,7 @@ function TextBox()
         <div id="txtbox" 
             tabIndex="0" 
             ref = {txtBoxRef}
-            onKeyDown={(e) => dispatch({type: e.key})>
+            onKeyDown={(e) => dispatch({type: e.key})} >
                 <Lines linesProp={linesParam} />
         </div>
     )
