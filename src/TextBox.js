@@ -62,18 +62,6 @@ function TextBox()
         setTimer(true)
     }, [line, lIdx, wIdx])
    
-    const KeyPressParam = [
-        line, 
-        setLine, 
-        lIdx,
-        setLIdx,
-        wIdx,
-        setWIdx,
-        setTimer,
-        showCaret, 
-        setWrap
-    ]
-
     const linesParam = [
         line,
         lIdx,
