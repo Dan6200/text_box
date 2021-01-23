@@ -10,15 +10,16 @@ import {
     handleEnterKey, 
 } from './utilities.js'
 
-export default function handleKeyPress 
-    (e, line, setLine, lIdx, setLIdx, wIdx, setWIdx, setTimer, showCaret, setWrap)  
+export default function reducer(state, action)
 {
     try {
         /// Stops the caret from blinking...
-            showCaret(true)
-            setTimer(false)
+        const caretState = {
+            showCaret: true 
+            setTimer: false
             // Enable text wrap
-            setWrap(true)
+            setWrap: true
+        }
 
         let values = {
                 newLine: [],
@@ -26,61 +27,55 @@ export default function handleKeyPress
                 newWIdx: 0
         }
 
-        let setters = {
-            setLine,
-            setLIdx,
-            setWIdx
-        }
+        const set = val => ({...state, ...caretState, line: val.newLine, 
+                lIdx: val.lIdx, wIdx: val.wIdx})
 
-        switch (e.key) {
+        switch (action.type)
             case "Backspace":
              // Calls the Function that handles backspaces 
                 // Declare new state values...
                 values = Backspace({   /// Modify state values...
-                    line: line,
-                    lIdx,
-                    wIdx
+                    line: state.line,
+                    lIdx: state.lIdx,
+                    wIdx: state.wIdx
                 })
-                console.log(line)
                 /// Update state values...
-                updateState(values, setters)
-                break
+                return set(values)
             case " ":
             // Calls the fucntion that handles input from the spacebar
                 /// Modify state values...
-                values = spaceBar(e, {line: line, lIdx, wIdx})
+                values = spaceBar(e, {line: state.line, state.lIdx, state.wIdx})
                 /// Update state values...
-                updateState(values, setters)
-                break
+                return set(values)
             case "ArrowLeft":
                 if (wIdx >= 0)
-                    setWIdx(wIdx - 1)
+                    return { ...state. ...caretState, wIdx: state.wIdx - 1}
                 break
             case "ArrowRight":
                 if (wIdx < line[lIdx].length)
-                    setWIdx(wIdx + 1)
-                break
+                    return { ...state. ...caretState, wIdx: state.wIdx + 1}
              case "ArrowUp":
                 if (lIdx >= 0)
                     setLIdx(lIdx - 1)
-                break
+                    return { ...state. ...caretState, lIdx: state.lIdx - 1}
             case "ArrowDown":
                 if (lIdx < line.length)
                     setLIdx(lIdx + 1)
+                    return { ...state. ...caretState, lIdx: state.lIdx + 1}
                 break
             case "Enter":
-                values = handleEnterKey({line: line, lIdx, wIdx})
-                updateState(values, setters)
-                break
+                values = handleEnterKey({line: state.line, state.lIdx, state.wIdx})
+                return set(values)
             default:
             /// Modify state values...
-                values = updateLine(e, line, lIdx, wIdx)
+                values = updateLine(e, {line: state.line, state.lIdx, state.wIdx})
                 /// Update state values...
-                updateState(values, setters)
+                return set(values)
             }
+            
     }
         catch (e) {
         console.info(e)
-        console.log(line, lIdx, wIdx)
+        console.log(state)
     }
 }

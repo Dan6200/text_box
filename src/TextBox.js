@@ -25,6 +25,20 @@ function TextBox()
     
     const [wordWrap, setWrap] = useState(true)
 
+    const AppState = {
+        /// Manages the state of the lines on the screen
+        line: [[]],
+        /// Line Index...
+        lIdx: 0,
+        /// Word Index...
+        wIdx: 0,
+        caretOn: false,
+        timerOn: true,
+        wordWrap: true,
+    }
+    
+
+
     const textRef = useRef()
 
     const txtBoxRef = useRef()
