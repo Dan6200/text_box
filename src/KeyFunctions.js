@@ -4,7 +4,6 @@
 
 import {
     Backspace, 
-    updateState, 
     updateLine, 
     spaceBar, 
     handleEnterKey, 
@@ -46,23 +45,25 @@ export default function modifier(state, action)
             case " ":
             // Calls the fucntion that handles input from the spacebar
                 /// Modify state values...
-                values = spaceBar(e, {line: state.line, lIdx: state.lIdx, wIdx: state.wIdx})
+                values = spaceBar({line: state.line, lIdx: state.lIdx, wIdx: state.wIdx})
                 /// Update state values...
                 return set(values)
             case "ArrowLeft":
-                if (wIdx >= 0)
+                if (state.wIdx >= 0)
                     return { ...state, ...caretState, wIdx: state.wIdx - 1}
-                break
+                break;
             case "ArrowRight":
-                if (wIdx < line[lIdx].length)
+                if (state.wIdx < state.line[state.lIdx].length)
                     return { ...state, ...caretState, wIdx: state.wIdx + 1}
+                break;
              case "ArrowUp":
-                if (lIdx >= 0)
+                if (state.lIdx >= 0)
                     return { ...state, ...caretState, lIdx: state.lIdx - 1}
+                break;
             case "ArrowDown":
-                if (lIdx < line.length)
+                if (state.lIdx < state.line.length)
                     return { ...state, ...caretState, lIdx: state.lIdx + 1}
-                break
+                break;
             case "Enter":
                 values = handleEnterKey({line: state.line, lIdx: state.lIdx, wIdx: state.wIdx})
                 return set(values)
@@ -70,9 +71,15 @@ export default function modifier(state, action)
                 values = handleWrap ({line: state.line, lIdx: state.lIdx, wIdx: state.wIdx,
                 wordWrap: state.wordWrap})
                 return {...state, ...values}
+            case "hide-caret":
+                return {...state, caretOn: state.caretOn=false};
+            case "show-caret":
+                return {...state, caretOn: state.caretOn=true};
+            case "set-timer-on":
+                return {...state, timerOn: state.timerOn=true};
             default:
             /// Modify state values...
-                values = updateLine(e, {line: state.line, lIdx: state.lIdx, wIdx: state.wIdx})
+                values = updateLine({line: state.line, lIdx: state.lIdx, wIdx: state.wIdx})
                 /// Update state values...
                 return set(values)
             }

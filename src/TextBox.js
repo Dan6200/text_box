@@ -4,7 +4,7 @@
 //////////////////////////////////////////////////////////////////////////////////////////////////
 
 
-import React, { useState, useRef, useEffect, useReducer } from 'react'
+import React, { useRef, useEffect, useReducer } from 'react'
 import modifier from './KeyFunctions.js'
 import {Lines} from './Page.js'
 import {useInterval} from './utilities.js'
@@ -69,7 +69,10 @@ function TextBox()
         <div id="txtbox" 
             tabIndex="0" 
             ref = {txtBoxRef}
-            onKeyDown={(e) => dispatch({type: e.key})} >
+            onKeyDown={(e) => {
+                    e.preventDefault();
+                    return dispatch({type: e.key})
+            }} >
                 <Lines linesProp={linesParam} />
         </div>
     )
