@@ -12,19 +12,6 @@ import {useInterval} from './utilities.js'
 
 function TextBox()
 {
-    /// Manages the state of the lines on the screen
-    const [line, setLine] = useState([[]])
-    /// Line Index...
-    const [lIdx, setLIdx] = useState(0)
-    /// Word Index...
-    const [wIdx, setWIdx] = useState(0)
-
-    const [caretOn, showCaret] = useState(false)
-
-    const [timerOn, setTimer] = useState(true)
-    
-    const [wordWrap, setWrap] = useState(true)
-
     const AppState = {
         /// Manages the state of the lines on the screen
         line: [[]],
@@ -36,8 +23,6 @@ function TextBox()
         timerOn: true,
         wordWrap: true,
     }
-    
-
 
     const textRef = useRef()
 
@@ -103,10 +88,7 @@ function TextBox()
         <div id="txtbox" 
             tabIndex="0" 
             ref = {txtBoxRef}
-            onKeyDown={(e) => handleKeyPress(
-                e,
-                ...KeyPressParam 
-            )}>
+            onKeyDown={(e) => dispatch({type: e.key})>
                 <Lines linesProp={linesParam} />
         </div>
     )
