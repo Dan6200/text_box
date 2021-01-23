@@ -88,3 +88,23 @@ export function handleEnterKey(obj)
         newWIdx: 0
     }
 }
+
+export function handleWrap(obj)
+{
+    const {line, lIdx, wIdx, wordWrap} = obj
+    const newLine = line
+    let lastWord = []
+    let array = newLine[lIdx] 
+    let i= array.length-1
+    while (array[i] !== '\x20\u200c' && i >= 0) i--
+    if (i > 0) 
+        lastWord = array.splice(i, array.length - i + 1)
+    newLine.splice(lIdx+1, 0, lastWord)
+    return {
+        newLine,
+        newLIdx: (l => l + 1),
+        newWIdx : (lastWord.length),
+        // Block it from async-ly re-running while the initial consition is still true
+        wordWrap: (false) 
+    }
+}
