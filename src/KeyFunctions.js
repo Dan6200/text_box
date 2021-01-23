@@ -67,6 +67,7 @@ export default function reducer(state, action)
                 values = handleEnterKey({line: state.line, state.lIdx, state.wIdx})
                 return set(values)
             case "text_wrap":
+                values = TextWrap ({line: state.line, lIdx: state.lIdx, wIdx: state.wIdx})
                 const newLine = line
                 let lastWord = []
                 let array = newLine[lIdx] 
