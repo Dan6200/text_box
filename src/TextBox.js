@@ -5,7 +5,7 @@
 
 
 import React, { useState, useRef, useEffect, useReducer } from 'react'
-import reducer from './KeyFunctions.js'
+import modifier from './KeyFunctions.js'
 import {Lines} from './Page.js'
 import {useInterval} from './utilities.js'
 
@@ -24,7 +24,7 @@ function TextBox()
         wordWrap: true,
     }
 
-    const [state, dispatch] = useReducer(reducer, AppState)
+    const [state, dispatch] = useReducer(modifier, AppState)
 
     const {line, lIdx, wIdx, caretOn, timerOn, wordWrap} = state;
 
@@ -47,12 +47,12 @@ function TextBox()
     }, [spanWidth, wordWrap, line, lIdx, paraWidth])
 
     useInterval(() => { // Controls the blinking of the timer
-        (caretOn) ? showCaret(false) :
-            showCaret(true)
+        (caretOn) ? dispatch({type: "hide-caret"}) :
+            dispatch({type: "show-caret"})
     }, 500, timerOn)
 
     useEffect(() => {
-        setTimer(true)
+        dispatch({type: "set-timer-on"});
     }, [line, lIdx, wIdx])
    
     const linesParam = [
