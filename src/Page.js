@@ -8,7 +8,7 @@ const Cursor = React.memo(props => {
 
 const blinker = isOn => (isOn) ? 'cursor' : 'hide'
 
-const printCaret = (array, curIdx, {textRef, cursorRef, caretOn, setTimer}) => {
+const printCaret = (array, curIdx, {textRef, cursorRef, caretOn}) => {
     let displayedText  = []
 
     displayedText = array.slice(0, curIdx) 

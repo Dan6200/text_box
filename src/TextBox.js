@@ -26,6 +26,7 @@ function TextBox()
 
     const [state, dispatch] = useReducer(modifier, AppState)
 
+    console.log(state);
     const {line, lIdx, wIdx, caretOn, timerOn, wordWrap} = state;
 
     const textRef = useRef()
@@ -70,7 +71,6 @@ function TextBox()
             tabIndex="0" 
             ref = {txtBoxRef}
             onKeyDown={(e) => {
-                    e.preventDefault();
                     return dispatch({type: e.key})
             }} >
                 <Lines linesProp={linesParam} />

@@ -28,7 +28,7 @@ export default function modifier(state, action)
         }
 
         const set = val => ({...state, ...caretState, line: val.newLine, 
-                lIdx: val.lIdx, wIdx: val.wIdx})
+                lIdx: val.newLIdx, wIdx: val.newWIdx})
 
         switch (action.type)
         {
@@ -79,7 +79,7 @@ export default function modifier(state, action)
                 return {...state, timerOn: state.timerOn=true};
             default:
             /// Modify state values...
-                values = updateLine({line: state.line, lIdx: state.lIdx, wIdx: state.wIdx})
+                values = updateLine(action.type, state.line, state.lIdx, state.wIdx)
                 /// Update state values...
                 return set(values)
             }

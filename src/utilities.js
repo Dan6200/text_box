@@ -16,8 +16,7 @@ export const useInterval = (func, delay, start) => {
 	
 }
 
-export function spaceBar(e, {line, lIdx, wIdx}) {
-    e.preventDefault()
+export function spaceBar({line, lIdx, wIdx}) {
     line[lIdx].splice(wIdx,0,'\x20\u200c')
     return {
         newLine: line,
@@ -26,11 +25,10 @@ export function spaceBar(e, {line, lIdx, wIdx}) {
     }
 }
 
-export function updateLine(e, line, lIdx, wIdx) {
-    e.preventDefault()
-    if (e.key.length === 1) 
+export function updateLine(key, line, lIdx, wIdx) {
+    if (key.length === 1) 
     {
-        line[lIdx].splice(wIdx,0,e.key)
+        line[lIdx].splice(wIdx+1,0,key)
     }
     return {
         newLine: line,
@@ -66,16 +64,6 @@ export function Backspace(obj) {
     }
 }
 
-export function updateState(values, setters)
-{
-    const {newLine, newLIdx, newWIdx} = values
-    const {setLine, setLIdx, setWIdx} = setters
-
-    setLine(newLine)
-    setLIdx(newLIdx)
-    setWIdx(newWIdx)
-}
-
 export function handleEnterKey(obj) 
 {
     const {line, lIdx, wIdx} = obj
@@ -91,7 +79,7 @@ export function handleEnterKey(obj)
 
 export function handleWrap(obj)
 {
-    const {line, lIdx, wIdx, wordWrap} = obj
+    const {line, lIdx} = obj
     const newLine = line
     let lastWord = []
     let array = newLine[lIdx] 
@@ -102,9 +90,9 @@ export function handleWrap(obj)
     newLine.splice(lIdx+1, 0, lastWord)
     return {
         newLine,
-        newLIdx: (l => l + 1),
-        newWIdx : (lastWord.length),
+        newLIdx: lIdx + 1,
+        newWIdx : lastWord.length,
         // Block it from async-ly re-running while the initial consition is still true
-        wordWrap: (false) 
+        wordWrap: false 
     }
 }
