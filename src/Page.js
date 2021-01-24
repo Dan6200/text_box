@@ -1,4 +1,5 @@
 import React from 'react'
+import uuid from 'react-uuid'
 
 const areEq = (preProps, postProps) => preProps === postProps
 
@@ -25,19 +26,30 @@ const printCaret = (array, curIdx, {textRef, cursorRef, caretOn}) => {
     return displayedText 
 }
 
-export const Lines = React.memo(props => {
+let numOfKeys = 0;
+const Key = {vals: [], set () { this.vals.push(uuid()) }};
+const genKey = howMany => {
+    if (howMany > numOfKeys)
+        while(numOfKeys++ < howMany)
+            Key.set()
+    return Key.vals
+}
+
+export const Lines = props => {
     const [line, lIdx, wIdx, textRef, paraRef, cursorRef, caretOn] = props.linesProp
+    let keys = [...genKey(line.length)]
 
     return (
         line.map((elem, index) => {
             if (index === lIdx) 
                 elem = printCaret(line[lIdx], wIdx, {textRef, cursorRef, caretOn})
             else elem = elem.join('')
+
             return (
                 <p className='normal-text' 
                     id={'line-'+ index} 
-                    key={index.toString()} 
-                ref={paraRef}>
+                    key={keys[index]}
+                    ref={paraRef}>
                     <span ref={textRef}>
                         {elem}
                     </span>
@@ -45,4 +57,4 @@ export const Lines = React.memo(props => {
             )
         })
     )
-}, areEq)
+}

@@ -25,7 +25,6 @@ function TextBox()
 
     const [state, dispatch] = useReducer(modifier, AppState)
 
-    console.log(state);
     const {line, lIdx, wIdx, caretOn, timerOn, wordWrap} = state;
 
     const textRef = useRef()
@@ -63,6 +62,7 @@ function TextBox()
             ref = {txtBoxRef}
             onKeyDown={(e) => dispatch({type: e.key})} >
                 <Lines linesProp={linesParam} />
+                {console.log(<Lines linesProp={linesParam} />)}
         </div>
     )
 }
