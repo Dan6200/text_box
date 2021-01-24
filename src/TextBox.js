@@ -62,7 +62,6 @@ function TextBox()
             ref = {txtBoxRef}
             onKeyDown={(e) => dispatch({type: e.key})} >
                 <Lines linesProp={linesParam} />
-                {console.log(<Lines linesProp={linesParam} />)}
         </div>
     )
 }
