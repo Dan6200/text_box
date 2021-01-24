@@ -19,9 +19,8 @@ function TextBox()
         lIdx: 0,
         /// Word Index...
         wIdx: 0,
-        caretOn: false,
-        timerOn: true,
-        wordWrap: true,
+
+        caretOn: false, timerOn: true, wordWrap: true,
     }
 
     const [state, dispatch] = useReducer(modifier, AppState)
@@ -56,23 +55,13 @@ function TextBox()
         dispatch({type: "set-timer-on"});
     }, [line, lIdx, wIdx])
    
-    const linesParam = [
-        line,
-        lIdx,
-        wIdx,
-        textRef,
-        paraRef,
-        cursorRef,
-        caretOn,
-    ]
+    const linesParam = [ line, lIdx, wIdx, textRef, paraRef, cursorRef, caretOn ]
 
     return (
         <div id="txtbox" 
             tabIndex="0" 
             ref = {txtBoxRef}
-            onKeyDown={(e) => {
-                    return dispatch({type: e.key})
-            }} >
+            onKeyDown={(e) => dispatch({type: e.key})} >
                 <Lines linesProp={linesParam} />
         </div>
     )

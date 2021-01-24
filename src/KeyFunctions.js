@@ -3,11 +3,7 @@
 /////////////////////////////////////////////////////////////////////
 
 import {
-    Backspace, 
-    updateLine, 
-    spaceBar, 
-    handleEnterKey, 
-    handleWrap,
+    Backspace, updateLine, spaceBar, handleEnterKey, handleWrap,
 } from './utilities.js'
 
 export default function modifier(state, action)
@@ -15,16 +11,11 @@ export default function modifier(state, action)
     try {
         /// Stops the caret from blinking...
         const caretState = {
-            caretOn: true, 
-            timerOn: false,
-            // Enable text wrap
-            wordWrap: true,
+            caretOn: true, timerOn: false, wordWrap: true,
         }
 
         let values = {
-                newLine: [],
-                newLIdx: 0,
-                newWIdx: 0
+                newLine: [], newLIdx: 0, newWIdx: 0
         }
 
         const set = val => ({...state, ...caretState, line: val.newLine, 
@@ -36,9 +27,7 @@ export default function modifier(state, action)
              // Calls the Function that handles backspaces 
                 // Declare new state values...
                 values = Backspace({   /// Modify state values...
-                    line: state.line,
-                    lIdx: state.lIdx,
-                    wIdx: state.wIdx
+                    line: state.line, lIdx: state.lIdx, wIdx: state.wIdx
                 })
                 /// Update state values...
                 return set(values)
