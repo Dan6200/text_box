@@ -4,11 +4,10 @@
 //////////////////////////////////////////////////////////////////////////////////////////////////
 
 
-import {useState, useRef, useEffect, useReducer } from 'react'
-import modifier from './KeyFunctions.js'
+import {useRef, useEffect, useReducer } from 'react'
+import modifier from './Reducer.js'
 import {Lines} from './Page.js'
 import {useInterval} from './utilities.js'
-import uuid from 'react-uuid'
 
 
 function TextBox()
@@ -21,7 +20,7 @@ function TextBox()
         /// Word Index...
         wIdx: 0,
 
-        key: [],
+        Keys: [],
 
         caretOn: false, timerOn: true, wordWrap: true,
     }
@@ -58,11 +57,13 @@ function TextBox()
     }, [line, lIdx, wIdx])
 
     useEffect(() => {
-        if (line.length > state.key.length) 
+        if (line.length > state.Keys.length) 
             dispatch({type: 'key-gen'})
-    }, [line, state.key])
+    }, [line, state.Keys])
             
     const linesParam = [ state, textRef, paraRef, cursorRef, caretOn ]
+
+    console.log(state)
 
     return (
         <div id="txtbox" 

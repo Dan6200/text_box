@@ -1,5 +1,4 @@
 import React from 'react'
-import uuid from 'react-uuid'
 
 const areEq = (preProps, postProps) => preProps === postProps
 
@@ -26,29 +25,21 @@ const printCaret = (array, curIdx, {textRef, cursorRef, caretOn}) => {
     return displayedText 
 }
 
-let numOfKeys = 0;
-const Key = {vals: [], set () { this.vals.push(uuid()) }};
-const genKey = howMany => {
-    if (howMany > numOfKeys)
-        while(numOfKeys++ < howMany)
-            Key.set()
-    return Key.vals
-}
 
-export const Lines = props => {
-    const [line, lIdx, wIdx, textRef, paraRef, cursorRef, caretOn] = props.linesProp
-    let keys = [...genKey(line.length)]
+
+export const Lines = React.memo(props => {
+    const [state, textRef, paraRef, cursorRef, caretOn] = props.linesProp
 
     return (
-        line.map((elem, index) => {
-            if (index === lIdx) 
-                elem = printCaret(line[lIdx], wIdx, {textRef, cursorRef, caretOn})
+        state.line.map((elem, index) => {
+            if (index === state.lIdx) 
+                elem = printCaret(state.line[state.lIdx], state.wIdx, {textRef, cursorRef, caretOn})
             else elem = elem.join('')
 
             return (
                 <p className='normal-text' 
                     id={'line-'+ index} 
-                    key={keys[index]}
+                    key={state.Key}
                     ref={paraRef}>
                     <span ref={textRef}>
                         {elem}
@@ -57,4 +48,4 @@ export const Lines = props => {
             )
         })
     )
-}
+}, areEq)

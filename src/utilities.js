@@ -1,4 +1,5 @@
 import {useRef, useEffect} from 'react'
+import uuid from 'react-uuid'
 
 export const useInterval = (func, delay, start) => {
 	const callback = useRef()
@@ -16,17 +17,11 @@ export const useInterval = (func, delay, start) => {
 	
 }
 
-//...Finish this later!
-useGenKeys = howMany => {
-    let numOfKeys = 0;
-    const Key = {vals: [], set () { this.vals.push(uuid()) }};
-    useEffect(() => if (howMany > numOfKeys)
-        while(numOfKeys++ < howMany)
-            Key.set()
-    return Key.vals
+export const genKeys = (Keys, howMany, numOfKeys) => {
+    while(numOfKeys++ < howMany)
+        Keys.push(uuid())
+    return Keys
 }
-
- 
 
 export function spaceBar({line, lIdx, wIdx}) {
     line[lIdx].splice(wIdx,0,'\x20\u200c')
