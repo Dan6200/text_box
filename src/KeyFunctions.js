@@ -10,56 +10,50 @@ export default function modifier(state, action)
 {
     try {
         /// Stops the caret from blinking...
-        const caretState = {
+        const keyMods = {
             caretOn: true, timerOn: false, wordWrap: true,
         }
 
-        let values = {
-                newLine: [], newLIdx: 0, newWIdx: 0
-        }
-
-        const set = val => ({...state, ...caretState, line: val.newLine, 
-                lIdx: val.newLIdx, wIdx: val.newWIdx})
+        const DeepCopy = array => array.map(elem => [...elem]) 
 
         switch (action.type)
         {
             case "Backspace":
              // Calls the Function that handles backspaces 
-                // Declare new state values...
-                values = Backspace({   /// Modify state values...
-                    line: state.line, lIdx: state.lIdx, wIdx: state.wIdx
-                })
                 /// Update state values...
-                return set(values)
+                return {...state, ...keyMods, ...Backspace({  
+                    line: DeepCopy(state.line), lIdx: state.lIdx, wIdx: state.wIdx
+                })}
             case " ":
             // Calls the fucntion that handles input from the spacebar
-                /// Modify state values...
-                values = spaceBar({line: state.line, lIdx: state.lIdx, wIdx: state.wIdx})
                 /// Update state values...
-                return set(values)
+                return {...state, ...keyMods, ...spaceBar({
+                    line: DeepCopy(state.line), lIdx: state.lIdx, wIdx: state.wIdx
+                })}
             case "ArrowLeft":
                 if (state.wIdx >= 0)
-                    return { ...state, ...caretState, wIdx: state.wIdx - 1}
+                    return { ...state, ...keyMods, wIdx: state.wIdx - 1}
                 break;
             case "ArrowRight":
                 if (state.wIdx < state.line[state.lIdx].length)
-                    return { ...state, ...caretState, wIdx: state.wIdx + 1}
+                    return { ...state, ...keyMods, wIdx: state.wIdx + 1}
                 break;
              case "ArrowUp":
                 if (state.lIdx >= 0)
-                    return { ...state, ...caretState, lIdx: state.lIdx - 1}
+                    return { ...state, ...keyMods, lIdx: state.lIdx - 1}
                 break;
             case "ArrowDown":
                 if (state.lIdx < state.line.length)
-                    return { ...state, ...caretState, lIdx: state.lIdx + 1}
+                    return { ...state, ...keyMods, lIdx: state.lIdx + 1}
                 break;
             case "Enter":
-                values = handleEnterKey({line: state.line, lIdx: state.lIdx, wIdx: state.wIdx})
-                return set(values)
+                return {...state, ...keyMods, ...handleEnterKey({
+                    line: DeepCopy(state.line), lIdx: state.lIdx, wIdx: state.wIdx
+                })}
             case "text_wrap":
-                values = handleWrap ({line: state.line, lIdx: state.lIdx, wIdx: state.wIdx,
-                wordWrap: state.wordWrap})
-                return {...state, ...values}
+                return {...state, ...keyMods, ...handleWrap ({
+                    line: DeepCopy(state.line), lIdx: state.lIdx, wIdx: state.wIdx, wordWrap: state.wordWrap
+                })}
             case "hide-caret":
                 return {...state, caretOn: state.caretOn=false};
             case "show-caret":
@@ -67,10 +61,11 @@ export default function modifier(state, action)
             case "set-timer-on":
                 return {...state, timerOn: state.timerOn=true};
             default:
-            /// Modify state values...
-                values = updateLine(action.type, state.line, state.lIdx, state.wIdx)
+                //debugger;
                 /// Update state values...
-                return set(values)
+                return {...state, ...keyMods, ...updateLine(
+                    action.type, DeepCopy(state.line), state.lIdx, state.wIdx
+                )}
             }
             
     }
