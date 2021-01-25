@@ -39,7 +39,7 @@ function TextBox()
 
     const paraWidth = paraRef.current ? paraRef.current.clientWidth : 1000
 
-    /*useEffect(() => {  // Controls the text Wrapping Effect 
+    useEffect(() => {  // Controls the text Wrapping Effect 
         if (wordWrap && spanWidth >= paraWidth-10) {
             dispatch({type: "text_wrap"})
         }
@@ -53,7 +53,7 @@ function TextBox()
     useEffect(() => {
         dispatch({type: "set-timer-on"});
     }, [line, lIdx, wIdx])
-  */
+
     const linesParam = [ line, lIdx, wIdx, textRef, paraRef, cursorRef, caretOn ]
     console.log(state)
 
@@ -61,7 +61,10 @@ function TextBox()
         <div id="txtbox" 
             tabIndex="0" 
             ref = {txtBoxRef}
-            onKeyDown={(e) => dispatch({type: e.key})} >
+            onKeyDown={(e) => {
+                e.preventDefault()
+                dispatch({type: e.key})}
+            } >
                 <Lines linesProp={linesParam} />
         </div>
     )
