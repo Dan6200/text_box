@@ -64,8 +64,6 @@ function TextBox()
             
     const linesParam = [ state, textRef, paraRef, cursorRef, caretOn ]
 
-    console.log(state)
-
     return (
         <div id="txtbox" 
             tabIndex="0" 
@@ -75,7 +73,6 @@ function TextBox()
                 dispatch({type: e.key})}
             } >
                 <Lines linesProp={linesParam} />
-                {console.log(<Lines linesProp={linesParam} />)}
         </div>
     )
 }
