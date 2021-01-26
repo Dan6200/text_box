@@ -19,7 +19,7 @@ export const useInterval = (func, delay, start) => {
 
 export const genKeys = (Keys, howMany, numOfKeys) => {
     if (howMany > numOfKeys)
-        while(numOfKeys++ < howMany+10)
+        while(numOfKeys++ < howMany+5)
             Keys.push(uuid())
     return Keys
 }

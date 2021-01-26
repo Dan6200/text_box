@@ -58,7 +58,7 @@ function TextBox()
     }, [line, lIdx, wIdx])
 
     useEffect(() => {
-        if (line.length > state.Keys.length) 
+        if (line.length >= state.Keys.length) 
             dispatch({type: 'key-gen'})
     }, [line, state.Keys])
             

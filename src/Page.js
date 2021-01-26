@@ -28,7 +28,6 @@ const printCaret = (array, curIdx, {textRef, cursorRef, caretOn}) => {
 
 export const Lines = React.memo(props => {
     const [state, textRef, paraRef, cursorRef, caretOn] = props.linesProp
-
     return (
         state.line.map((elem, index) => {
             if (index === state.lIdx) 
@@ -41,7 +40,6 @@ export const Lines = React.memo(props => {
                     ref={paraRef}>
                     <span ref={textRef}>
                         {elem}
-                        {console.log(state.Keys[index], index)}
                     </span>
                 </p>
             )
