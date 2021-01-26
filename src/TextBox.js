@@ -8,6 +8,7 @@ import {useRef, useEffect, useReducer } from 'react'
 import modifier from './Reducer.js'
 import {Lines} from './Page.js'
 import {useInterval} from './utilities.js'
+import uuid from 'react-uuid'
 
 
 function TextBox()
@@ -20,7 +21,7 @@ function TextBox()
         /// Word Index...
         wIdx: 0,
 
-        Keys: [],
+        Keys: [uuid()],
 
         caretOn: false, timerOn: true, wordWrap: true,
     }
@@ -74,6 +75,7 @@ function TextBox()
                 dispatch({type: e.key})}
             } >
                 <Lines linesProp={linesParam} />
+                {console.log(<Lines linesProp={linesParam} />)}
         </div>
     )
 }

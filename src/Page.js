@@ -35,11 +35,10 @@ export const Lines = React.memo(props => {
             if (index === state.lIdx) 
                 elem = printCaret(state.line[state.lIdx], state.wIdx, {textRef, cursorRef, caretOn})
             else elem = elem.join('')
-
             return (
                 <p className='normal-text' 
                     id={'line-'+ index} 
-                    key={state.Key}
+                    key={state.Keys[index]}
                     ref={paraRef}>
                     <span ref={textRef}>
                         {elem}

@@ -61,7 +61,7 @@ export default function modifier(state, action)
             case "set-timer-on":
                 return {...state, timerOn: state.timerOn=true};
             case "key-gen":
-                return {...state, Key: genKeys(DeepCopy(state.Keys), state.line.length, state.Key.length)}
+                return {...state, Keys: genKeys([...state.Keys], state.line.length, state.Keys.length)}
             default:
                 /// Update state values...
                 return {...state, ...keyMods, ...updateLine(
