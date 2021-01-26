@@ -47,9 +47,10 @@ export default function modifier(state, action)
                     return { ...state, ...keyMods, lIdx: state.lIdx + 1}
                 break;
             case "Enter":
-                return {...state, ...keyMods, ...handleEnterKey({
-                    line: DeepCopy(state.line), lIdx: state.lIdx, wIdx: state.wIdx
-                })}
+                return {...state, ...keyMods, Keys: genKeys([...state.Keys], 
+                    state.line.length + 1, state.Keys.length), ...handleEnterKey(
+                    { line: DeepCopy(state.line), lIdx: state.lIdx, wIdx: state.wIdx})
+                }
             case "text_wrap":
                 return {...state, ...keyMods, ...handleWrap ({
                     line: DeepCopy(state.line), lIdx: state.lIdx, wIdx: state.wIdx, wordWrap: state.wordWrap
@@ -60,8 +61,6 @@ export default function modifier(state, action)
                 return {...state, caretOn: state.caretOn=true};
             case "set-timer-on":
                 return {...state, timerOn: state.timerOn=true};
-            case "key-gen":
-                return {...state, Keys: genKeys([...state.Keys], state.line.length, state.Keys.length)}
             default:
                 /// Update state values...
                 return {...state, ...keyMods, ...updateLine(

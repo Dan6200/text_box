@@ -21,7 +21,7 @@ function TextBox()
         /// Word Index...
         wIdx: 0,
 
-        Keys: [uuid(), uuid(), uuid()],
+        Keys: [uuid()],
 
         caretOn: false, timerOn: true, wordWrap: true,
     }
@@ -57,11 +57,6 @@ function TextBox()
         dispatch({type: "set-timer-on"});
     }, [line, lIdx, wIdx])
 
-    useEffect(() => {
-        if (line.length >= state.Keys.length) 
-            dispatch({type: 'key-gen'})
-    }, [line.length, state.Keys.length])
-            
     const linesParam = [ state, textRef, paraRef, cursorRef, caretOn ]
 
     return (
