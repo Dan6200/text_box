@@ -40,7 +40,6 @@ export const Lines = React.memo(props => {
                     ref={paraRef}>
                     <span ref={textRef}>
                         {elem}
-                        {console.log(state.Keys)}
                     </span>
                 </p>
             )
