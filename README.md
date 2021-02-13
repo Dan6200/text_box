@@ -1,3 +1,3 @@
-# Text Box
-In this project I implement a text box as part of a larger Text Editor project...
+# Text Editor
+In this project I implement a simple Text Editor
 
