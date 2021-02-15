@@ -41,8 +41,7 @@ function TextBox()
 
     let spanWidth = (textRef.current[lIdx].current) ? 
 		textRef.current[lIdx].current.offsetWidth : 100
-
-	console.log(spanWidth, textRef)
+	console.log(textRef)
 
     const paraWidth = paraRef.current ? paraRef.current.clientWidth : 1000
 
