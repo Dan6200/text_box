@@ -31,21 +31,27 @@ export default function modifier(state, action)
                     line: DeepCopy(state.line), lIdx: state.lIdx, wIdx: state.wIdx
                 })}
             case "ArrowLeft":
-                if (state.wIdx >= 0)
+                if (state.wIdx > 0)
+				{
+					console.log(state)
                     return { ...state, ...keyMods, wIdx: state.wIdx - 1}
-                break;
+				}
+				else {
+					console.log(state)
+					return state
+				}
             case "ArrowRight":
                 if (state.wIdx < state.line[state.lIdx].length)
                     return { ...state, ...keyMods, wIdx: state.wIdx + 1}
-                break;
+				else return state
              case "ArrowUp":
                 if (state.lIdx >= 0)
                     return { ...state, ...keyMods, lIdx: state.lIdx - 1}
-                break;
+				else return state
             case "ArrowDown":
                 if (state.lIdx < state.line.length)
                     return { ...state, ...keyMods, lIdx: state.lIdx + 1}
-                break;
+				else return state
             case "Enter":
                 return {...state, ...keyMods, Keys: genKeys([...state.Keys], 
                     state.line.length + 1, state.Keys.length), ...handleEnterKey(
@@ -70,7 +76,7 @@ export default function modifier(state, action)
             
     }
         catch (e) {
-        console.info(e)
         console.log(state)
     }
+
 }

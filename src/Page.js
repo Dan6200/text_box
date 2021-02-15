@@ -28,6 +28,7 @@ const printCaret = (array, curIdx, {textRef, cursorRef, caretOn}) => {
 
 export const Lines = React.memo(props => {
     const [state, textRef, paraRef, cursorRef, caretOn] = props.linesProp
+	console.log(state)
     return (
         state.line.map((elem, index) => {
             if (index === state.lIdx) 
