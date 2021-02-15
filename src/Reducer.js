@@ -10,7 +10,7 @@ export default function modifier(state, action)
 {
     try {
         /// Stops the caret from blinking...
-        const keyMods = {
+        const stateMods = {
             caretOn: true, timerOn: false, wordWrap: true,
         }
 
@@ -21,20 +21,20 @@ export default function modifier(state, action)
             case "Backspace":
              // Calls the Function that handles backspaces 
                 /// Update state values...
-                return {...state, ...keyMods, ...Backspace({  
+                return {...state, ...stateMods, ...Backspace({  
                     line: DeepCopy(state.line), lIdx: state.lIdx, wIdx: state.wIdx
                 })}
             case " ":
             // Calls the fucntion that handles input from the spacebar
                 /// Update state values...
-                return {...state, ...keyMods, ...spaceBar({
+                return {...state, ...stateMods, ...spaceBar({
                     line: DeepCopy(state.line), lIdx: state.lIdx, wIdx: state.wIdx
                 })}
             case "ArrowLeft":
                 if (state.wIdx > 0)
 				{
 					console.log(state)
-                    return { ...state, ...keyMods, wIdx: state.wIdx - 1}
+                    return { ...state, ...stateMods, wIdx: state.wIdx - 1}
 				}
 				else {
 					console.log(state)
@@ -42,23 +42,24 @@ export default function modifier(state, action)
 				}
             case "ArrowRight":
                 if (state.wIdx < state.line[state.lIdx].length)
-                    return { ...state, ...keyMods, wIdx: state.wIdx + 1}
+                    return { ...state, ...stateMods, wIdx: state.wIdx + 1}
 				else return state
              case "ArrowUp":
                 if (state.lIdx >= 0)
-                    return { ...state, ...keyMods, lIdx: state.lIdx - 1}
+                    return { ...state, ...stateMods, lIdx: state.lIdx - 1}
 				else return state
             case "ArrowDown":
                 if (state.lIdx < state.line.length)
-                    return { ...state, ...keyMods, lIdx: state.lIdx + 1}
+                    return { ...state, ...stateMods, lIdx: state.lIdx + 1}
 				else return state
             case "Enter":
-                return {...state, ...keyMods, Keys: genKeys([...state.Keys], 
+                return {...state, ...stateMods, Keys: genKeys([...state.Keys], 
                     state.line.length + 1, state.Keys.length), ...handleEnterKey(
                     { line: DeepCopy(state.line), lIdx: state.lIdx, wIdx: state.wIdx})
                 }
             case "text_wrap":
-                return {...state, ...keyMods, ...handleWrap ({
+                return {...state, ...stateMods, Keys: genKeys([...state.Keys], 
+                    state.line.length + 1, state.Keys.length), ...handleWrap ({
                     line: DeepCopy(state.line), lIdx: state.lIdx, wIdx: state.wIdx, wordWrap: state.wordWrap
                 })}
             case "hide-caret":
@@ -69,7 +70,7 @@ export default function modifier(state, action)
                 return {...state, timerOn: state.timerOn=true};
             default:
                 /// Update state values...
-                return {...state, ...keyMods, ...updateLine(
+                return {...state, ...stateMods, ...updateLine(
                     action.type, DeepCopy(state.line), state.lIdx, state.wIdx
                 )}
             }
