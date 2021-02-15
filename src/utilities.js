@@ -87,6 +87,7 @@ export function handleEnterKey(obj)
 
 export function handleWrap(obj)
 {
+	/* --- TODO: This function is Buggy fix this! --- */
     const {line, lIdx} = obj
     let lastWord = []
     let array = line[lIdx] 

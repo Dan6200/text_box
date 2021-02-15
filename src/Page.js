@@ -39,7 +39,7 @@ export const Lines = React.memo(props => {
                     id={'line-'+ index} 
                     key={state.Keys[index]}
                     ref={paraRef}>
-                    <span ref={textRef}>
+                    <span ref={textRef.current[state.lIdx]}>
                         {elem}
                     </span>
                 </p>

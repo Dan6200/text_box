@@ -55,12 +55,15 @@ export default function modifier(state, action)
             case "Enter":
                 return {...state, ...stateMods, Keys: genKeys([...state.Keys], 
                     state.line.length + 1, state.Keys.length), ...handleEnterKey(
-                    { line: DeepCopy(state.line), lIdx: state.lIdx, wIdx: state.wIdx})
-                }
+						{line: DeepCopy(state.line), lIdx: state.lIdx, wIdx: state.wIdx}
+					)
+				}
             case "text_wrap":
                 return {...state, ...stateMods, Keys: genKeys([...state.Keys], 
                     state.line.length + 1, state.Keys.length), ...handleWrap ({
-                    line: DeepCopy(state.line), lIdx: state.lIdx, wIdx: state.wIdx, wordWrap: state.wordWrap
+						line: DeepCopy(state.line), 
+						lIdx: state.lIdx, wIdx: state.wIdx,
+						wordWrap: state.wordWrap
                 })}
             case "hide-caret":
                 return {...state, caretOn: state.caretOn=false};

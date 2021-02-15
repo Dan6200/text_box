@@ -30,7 +30,8 @@ function TextBox()
 
     const {line, lIdx, wIdx, caretOn, timerOn, wordWrap} = state;
 
-    const textRef = useRef()
+    const textRef = useRef([])
+    textRef.current[lIdx] = useRef()
 
     const txtBoxRef = useRef()
    
@@ -38,13 +39,17 @@ function TextBox()
 
     const cursorRef = useRef()
 
-    const spanWidth = (textRef.current) ? textRef.current.offsetWidth : 100
+    let spanWidth = (textRef.current[lIdx].current) ? 
+		textRef.current[lIdx].current.offsetWidth : 100
+
+	console.log(spanWidth, textRef)
 
     const paraWidth = paraRef.current ? paraRef.current.clientWidth : 1000
 
     useEffect(() => {  // Controls the text Wrapping Effect 
         if (wordWrap && spanWidth >= paraWidth-10) {
             dispatch({type: "text_wrap"})
+			alert("dispatched")
         }
     }, [spanWidth, wordWrap, line, lIdx, paraWidth])
 
