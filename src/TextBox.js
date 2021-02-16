@@ -10,6 +10,7 @@ import {Lines} from './Page.js'
 import {useInterval} from './utilities.js'
 import uuid from 'react-uuid'
 
+let i=0
 
 function TextBox()
 {
@@ -35,7 +36,11 @@ function TextBox()
 
 	textRef.current[0] = useRef(null)
 	textRef.current[1] = useRef(null)
-	textRef.current[line.length] = useRef(null)
+	textRef.current[2] = useRef(null)
+	textRef.current[i] = useRef(null) // <-- Doesn't work TODO fix this
+	textRef.current[line.length-1] = useRef(null) // <-- Doesn't work TODO fix this
+	console.log(i, textRef.current[i])
+	while(i < line.length-1) i++
 
     const txtBoxRef = useRef()
    
