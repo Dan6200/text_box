@@ -31,11 +31,8 @@ export default function modifier(state, action)
                     line: DeepCopy(state.line), lIdx: state.lIdx, wIdx: state.wIdx
                 })}
             case "ArrowLeft":
-                if (state.wIdx > 0)
-				{
-					console.log(state)
+                if (state.wIdx)
                     return { ...state, ...stateMods, wIdx: state.wIdx - 1}
-				}
 				else {
 					console.log(state)
 					return state
@@ -45,11 +42,11 @@ export default function modifier(state, action)
                     return { ...state, ...stateMods, wIdx: state.wIdx + 1}
 				else return state
              case "ArrowUp":
-                if (state.lIdx >= 0)
+                if (state.lIdx)
                     return { ...state, ...stateMods, lIdx: state.lIdx - 1}
 				else return state
             case "ArrowDown":
-                if (state.lIdx < state.line.length)
+                if (state.lIdx < state.line.length-1)
                     return { ...state, ...stateMods, lIdx: state.lIdx + 1}
 				else return state
             case "Enter":

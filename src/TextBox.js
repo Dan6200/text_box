@@ -4,7 +4,7 @@
 //////////////////////////////////////////////////////////////////////////////////////////////////
 
 
-import {useRef, useEffect, useReducer } from 'react'
+import React, {useRef, useEffect, useReducer } from 'react'
 import modifier from './Reducer.js'
 import {Lines} from './Page.js'
 import {useInterval} from './utilities.js'
@@ -30,8 +30,12 @@ function TextBox()
 
     const {line, lIdx, wIdx, caretOn, timerOn, wordWrap} = state;
 
-    const textRef = useRef([])
-    textRef.current[lIdx] = useRef()
+    //const textRef = useRef(Array.from({length: line.length}, el => React.createRef()))
+	const textRef = useRef([])
+
+	textRef.current[0] = useRef(null)
+	textRef.current[1] = useRef(null)
+	textRef.current[line.length] = useRef(null)
 
     const txtBoxRef = useRef()
    
@@ -41,7 +45,6 @@ function TextBox()
 
     let spanWidth = (textRef.current[lIdx].current) ? 
 		textRef.current[lIdx].current.offsetWidth : 100
-	console.log(textRef)
 
     const paraWidth = paraRef.current ? paraRef.current.clientWidth : 1000
 
