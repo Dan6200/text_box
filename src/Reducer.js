@@ -33,22 +33,20 @@ export default function modifier(state, action)
             case "ArrowLeft":
                 if (state.wIdx)
                     return { ...state, ...stateMods, wIdx: state.wIdx - 1}
-				else {
-					console.log(state)
-					return state
-				}
+				return state
+				
             case "ArrowRight":
                 if (state.wIdx < state.line[state.lIdx].length)
                     return { ...state, ...stateMods, wIdx: state.wIdx + 1}
-				else return state
+				return state
              case "ArrowUp":
                 if (state.lIdx)
                     return { ...state, ...stateMods, lIdx: state.lIdx - 1}
-				else return state
+				return state
             case "ArrowDown":
                 if (state.lIdx < state.line.length-1)
                     return { ...state, ...stateMods, lIdx: state.lIdx + 1}
-				else return state
+				return state
             case "Enter":
                 return {...state, ...stateMods, Keys: genKeys([...state.Keys], 
                     state.line.length + 1, state.Keys.length), ...handleEnterKey(
