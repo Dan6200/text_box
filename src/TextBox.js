@@ -10,7 +10,6 @@ import {Lines} from './Page.js'
 import {useInterval} from './utilities.js'
 import uuid from 'react-uuid'
 
-let i=0
 
 function TextBox()
 {
@@ -31,16 +30,8 @@ function TextBox()
 
     const {line, lIdx, wIdx, caretOn, timerOn, wordWrap} = state;
 
-    //const textRef = useRef(Array.from({length: line.length}, el => React.createRef()))
-	const textRef = useRef([])
-
-	textRef.current[0] = useRef(null)
-	textRef.current[1] = useRef(null)
-	textRef.current[2] = useRef(null)
-	textRef.current[i] = useRef(null) // <-- Doesn't work TODO fix this
-	textRef.current[line.length-1] = useRef(null) // <-- Doesn't work TODO fix this
-	console.log(i, textRef.current[i])
-	while(i < line.length-1) i++
+	/* -- QuerySelector worked much better than refs use this -- */
+	const span_elements = document.querySelectorAll('p > span');
 
     const txtBoxRef = useRef()
    
@@ -48,15 +39,14 @@ function TextBox()
 
     const cursorRef = useRef()
 
-    let spanWidth = (textRef.current[lIdx].current) ? 
-		textRef.current[lIdx].current.offsetWidth : 100
+    let spanWidth = (span_elements.length && span_elements[lIdx]) ? 
+		span_elements[lIdx].offsetWidth : 100	
 
     const paraWidth = paraRef.current ? paraRef.current.clientWidth : 1000
 
     useEffect(() => {  // Controls the text Wrapping Effect 
         if (wordWrap && spanWidth >= paraWidth-10) {
             dispatch({type: "text_wrap"})
-			alert("dispatched")
         }
     }, [spanWidth, wordWrap, line, lIdx, paraWidth])
 
@@ -69,7 +59,7 @@ function TextBox()
         dispatch({type: "set-timer-on"});
     }, [line, lIdx, wIdx])
 
-    const linesParam = [ state, textRef, paraRef, cursorRef, caretOn ]
+    const linesParam = [ state, paraRef, cursorRef, caretOn ]
 
     return (
         <div id="txtbox" 

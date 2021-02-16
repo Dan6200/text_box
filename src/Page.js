@@ -8,7 +8,7 @@ const Cursor = React.memo(props => {
 
 const blinker = isOn => (isOn) ? 'cursor' : 'hide'
 
-const printCaret = (array, curIdx, {textRef, cursorRef, caretOn}) => {
+const printCaret = (array, curIdx, {cursorRef, caretOn}) => {
     let displayedText  = []
 
     displayedText = array.slice(0, curIdx) 
@@ -27,19 +27,18 @@ const printCaret = (array, curIdx, {textRef, cursorRef, caretOn}) => {
 
 
 export const Lines = React.memo(props => {
-    const [state, textRef, paraRef, cursorRef, caretOn] = props.linesProp
+    const [state, paraRef, cursorRef, caretOn] = props.linesProp
     return (
         state.line.map((elem, index) => {
-			console.log(index, textRef.current)
             if (index === state.lIdx) 
-                elem = printCaret(state.line[state.lIdx], state.wIdx, {textRef, cursorRef, caretOn})
+                elem = printCaret(state.line[state.lIdx], state.wIdx, {cursorRef, caretOn})
             else elem = elem.join('')
             return (
                 <p className='normal-text' 
                     id={'line-'+ index} 
                     key={state.Keys[index]}
                     ref={paraRef}>
-                    <span ref={textRef.current[index]} id={"span"+index}>
+                    <span id={"span"+index}>
                         {elem}
                     </span>
                 </p>
