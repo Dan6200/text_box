@@ -14,21 +14,19 @@ export default function modifier(state, action)
             caretOn: true, timerOn: false, wordWrap: true,
         }
 
-        const DeepCopy = array => array.map(elem => [...elem]) 
-
         switch (action.type)
         {
             case "Backspace":
              // Calls the Function that handles backspaces 
                 /// Update state values...
                 return {...state, ...stateMods, ...Backspace({  
-                    line: DeepCopy(state.line), lIdx: state.lIdx, wIdx: state.wIdx
+                    line: state.line, lIdx: state.lIdx, wIdx: state.wIdx
                 })}
             case " ":
             // Calls the fucntion that handles input from the spacebar
                 /// Update state values...
                 return {...state, ...stateMods, ...spaceBar({
-                    line: DeepCopy(state.line), lIdx: state.lIdx, wIdx: state.wIdx
+                    line: state.line, lIdx: state.lIdx, wIdx: state.wIdx
                 })}
             case "ArrowLeft":
                 if (state.wIdx)
@@ -50,13 +48,13 @@ export default function modifier(state, action)
             case "Enter":
                 return {...state, ...stateMods, Keys: genKeys([...state.Keys], 
                     state.line.length + 1, state.Keys.length), ...handleEnterKey(
-						{line: DeepCopy(state.line), lIdx: state.lIdx, wIdx: state.wIdx}
+						{line: state.line, lIdx: state.lIdx, wIdx: state.wIdx}
 					)
 				}
             case "text_wrap":
                 return {...state, ...stateMods, Keys: genKeys([...state.Keys], 
                     state.line.length + 1, state.Keys.length), ...handleWrap ({
-						line: DeepCopy(state.line), 
+						line: state.line, 
 						lIdx: state.lIdx, wIdx: state.wIdx,
 						wordWrap: state.wordWrap
                 })}
@@ -69,7 +67,7 @@ export default function modifier(state, action)
             default:
                 /// Update state values...
                 return {...state, ...stateMods, ...updateLine(
-                    action.type, DeepCopy(state.line), state.lIdx, state.wIdx
+                    action.type, state.line, state.lIdx, state.wIdx
                 )}
             }
             

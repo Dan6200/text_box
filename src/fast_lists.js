@@ -3,7 +3,7 @@
  * ---- during the text editing process.
  */
 
-class Node {
+export class Node {
 	constructor(val = null, prev = null, next = null) 
 	{
 		this.#val = val;
@@ -36,12 +36,14 @@ class Node {
 	}
 }
 
-export default class FastLists 
+export class FastLists 
 {
-	constructor(head = null, tail = null)
+	constructor(head = null, curNode = null, tail = null)
 	{
 		this.#head = head;
 		this.#tail = tail;
+		this.#curNode = curNode;
+		this.#cnt = 0;
 	}
 
 	setHead(head) {
@@ -50,6 +52,10 @@ export default class FastLists
 
 	setTail(tail) {
 		this.#tail = tail;
+	}
+
+	setCurNode(node) {
+		this.#curNode = node;
 	}
 		
 	getHead() {
@@ -60,13 +66,70 @@ export default class FastLists
 		return this.#tail;
 	}
 
-	addNode(node) {
+	getCurNode() {
+		return this.#curNode;
+	}
+
+	getCnt() {
+		return this.#cnt;
+	}
+
+	addToHead(node) {
 		if (this.getHead() == this.getTail())
 		{
 			this.setHead(node);
 			this.setTail(node);
 		}
 		else {
-			this.getHead().setNext(node);
+			this.getHead().setPrev(node);
+			node.setNext(this.getHead());
+			this.setHead(node);
+		}
+		this.#cnt++;
+		this.setCurNode(node);
+	}
+
+	addTail(node) {
+		if (this.getHead() == this.getTail())
+		{
+			this.setHead(node);
+			this.setTail(node);
+		}
+		else {
+			this.getTail().setNext(node);
+			node.setPrev(this.getTail());
+			this.setTail(node);
+		}
+		this.setCurNode(node);
+		this.#cnt++;
+	}
+
+	add(node) {
+		if (this.getHead() == this.getTail())
+		{
+			this.setHead(node);
+			this.setTail(node);
+			this.setCurNode(node);
+		}
+		else {
+			next = this.getCurNode().getNext();
+			prev = this.getCurNode().getPrev();
+			node.setNext(next);
+			node.setPrev(prev);
+			this.getCurNode().setNext(node);
+			this.getCurNode().setPrev(node);
+		}
+		this.#cnt++;
+	}
+
+	forward() {
+		if (this.getCurNode().getNext()) 
+			this.setCurNode(this.getCurNode().getNext());
+	}
+	
+	backward() {
+		if (this.getCurNode().getPrev()) 
+			this.setCurNode(this.getCurNode().getPrev());
+	}
 
 }
