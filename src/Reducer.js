@@ -68,7 +68,7 @@ export default function modifier(state, action)
                 /// Update state values...
                 return {...state, ...stateMods, ...updateLine(
                     action.type, state.line, state.lIdx, state.wIdx
-                )}
+                ), line2: state.line2.add(new Node(action.type))}
             }
             
     }

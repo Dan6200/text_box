@@ -38,12 +38,12 @@ export class Node {
 
 export class FastLists 
 {
-	constructor(head = null, tail = null)
+	constructor(head = null)
 	{
 		this._head = head;
-		this._tail = tail;
+		this._tail = head;
 		this._curNode = head;
-		this._cnt = 0;
+		this._cnt = (head)? 1 : 0;
 	}
 
 	setHead(head) {
@@ -74,7 +74,7 @@ export class FastLists
 		return this._cnt;
 	}
 
-	addToHead(node) {
+	addHead(node) {
 		if (this.getHead() === null)
 		{
 			this.setHead(node);
@@ -105,11 +105,14 @@ export class FastLists
 	}
 
 	add(node) {
-		if (this.getCurNode().getNext() === null)
+		if (this.getCurNode().getPrev() === null)
 		{
-			this.setHead(node);
-			this.setTail(node);
-			this.setCurNode(node);
+			debugger
+			this.addHead(node);
+		}
+		else if (this.getCurNode().getNext() === null)
+		{
+			this.addTail(node);
 		}
 		else {
 			let next = this.getCurNode().getNext();
@@ -120,8 +123,8 @@ export class FastLists
 			next.setPrev(node);
 			this.getCurNode().setNext(node);
 			this.setCurNode(node);
+			this._cnt++;
 		}
-		this._cnt++;
 	}
 
 	forward() {
