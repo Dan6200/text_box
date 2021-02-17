@@ -66,9 +66,10 @@ export default function modifier(state, action)
                 return {...state, timerOn: state.timerOn=true};
             default:
                 /// Update state values...
+				console.log(state)
                 return {...state, ...stateMods, ...updateLine(
-                    action.type, state.line, state.lIdx, state.wIdx
-                ), line2: state.line2.add(new Node(action.type))}
+                    action.type, state.line, state.line2, state.lIdx, state.wIdx
+                )}
             }
             
     }

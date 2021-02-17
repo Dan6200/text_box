@@ -38,12 +38,12 @@ export class Node {
 
 export class FastLists 
 {
-	constructor(head = null)
+	constructor(val = null)
 	{
-		this._head = head;
-		this._tail = head;
-		this._curNode = head;
-		this._cnt = (head)? 1 : 0;
+		this._head = new Node(val);
+		this._tail = this._head;
+		this._curNode = this._head;
+		this._cnt = (val)? 1 : 0;
 	}
 
 	setHead(head) {
@@ -74,50 +74,51 @@ export class FastLists
 		return this._cnt;
 	}
 
-	addHead(node) {
+	addHead(val) {
 		if (this.getHead() === null)
 		{
+			let node = new Node(val);
 			this.setHead(node);
 			this.setTail(node);
+			this.setCurNode(node);
 		}
 		else {
+			let node = new Node(val);
 			this.getHead().setPrev(node);
 			node.setNext(this.getHead());
 			this.setHead(node);
+			this.setCurNode(node);
 		}
 		this._cnt++;
-		this.setCurNode(node);
 	}
 
-	addTail(node) {
+	addTail(val) {
 		if (this.getHead() === null)
 		{
+			let node = new Node(val);
 			this.setHead(node);
 			this.setTail(node);
+			this.setCurNode(node);
 		}
 		else {
+			let node = new Node(val);
 			this.getTail().setNext(node);
 			node.setPrev(this.getTail());
 			this.setTail(node);
+			this.setCurNode(node);
 		}
-		this.setCurNode(node);
 		this._cnt++;
 	}
 
-	add(node) {
-		if (this.getCurNode().getPrev() === null)
-		{
-			debugger
-			this.addHead(node);
-		}
+	add(val) {
+		if (this.getHead() === null)
+			this.addHead(val);
 		else if (this.getCurNode().getNext() === null)
-		{
-			this.addTail(node);
-		}
+			this.addTail(val);
 		else {
+			let node = new Node(val);
 			let next = this.getCurNode().getNext();
 			let curr = this.getCurNode();
-			console.log(next,curr)
 			node.setNext(next);
 			node.setPrev(curr);
 			next.setPrev(node);

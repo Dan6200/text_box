@@ -33,13 +33,16 @@ export function spaceBar({line, lIdx, wIdx}) {
     }
 }
 
-export function updateLine(key, line, lIdx, wIdx) {
+export function updateLine(key, line, line2, lIdx, wIdx) {
     if (key.length === 1) 
     {
+		debugger
         line[lIdx].splice(wIdx,0,key)
+		line2.add(key)
     }
     return {
         line,
+		line2,
         lIdx,
         wIdx: wIdx + 1
     }
