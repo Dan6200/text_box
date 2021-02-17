@@ -36,7 +36,6 @@ export function spaceBar({line, lIdx, wIdx}) {
 export function updateLine(key, line, line2, lIdx, wIdx) {
     if (key.length === 1) 
     {
-		debugger
         line[lIdx].splice(wIdx,0,key)
 		line2.add(key)
     }
@@ -99,9 +98,12 @@ export function handleWrap(obj)
     if (i > 0) 
         lastWord = array.splice(i, array.length - i + 1)
     line.splice(lIdx+1, 0, lastWord)
-    return {
-        line,
-        // Block it from async-ly re-running while the initial consition is still true
-        wordWrap: false 
-    }
+	
+	return {
+		line,
+		lIdx: lIdx+1,
+		wIdx: lastWord.length,
+		wordWrap: false 
+	}
+
 }

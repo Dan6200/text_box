@@ -63,17 +63,23 @@ function TextBox()
 
     const linesParam = [ state, paraRef, cursorRef, caretOn ]
 
+	useEffect(() => {
+		let keyHandler = e => {
+			e.preventDefault()
+			dispatch({type: e.key})
+		}
+		document.addEventListener('keydown', keyHandler)
+		return () =>  document.removeEventListener('keydown', keyHandler)
+	})
+
     return (
         <div id="txtbox" 
             tabIndex="0" 
-            ref = {txtBoxRef}
-            onKeyDown={(e) => {
-                e.preventDefault()
-                dispatch({type: e.key})}
-            } >
+            ref = {txtBoxRef} >
                 <Lines linesProp={linesParam} />
         </div>
     )
 }
+
 
 export default TextBox

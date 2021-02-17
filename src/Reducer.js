@@ -66,7 +66,6 @@ export default function modifier(state, action)
                 return {...state, timerOn: state.timerOn=true};
             default:
                 /// Update state values...
-				console.log(state)
                 return {...state, ...stateMods, ...updateLine(
                     action.type, state.line, state.line2, state.lIdx, state.wIdx
                 )}

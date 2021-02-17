@@ -38,7 +38,7 @@ export class Node {
 
 export class FastLists 
 {
-	constructor(val = null)
+	constructor(val = '\u200c')
 	{
 		this._head = new Node(val);
 		this._tail = this._head;
@@ -112,9 +112,13 @@ export class FastLists
 
 	add(val) {
 		if (this.getHead() === null)
+		{
 			this.addHead(val);
+		}
 		else if (this.getCurNode().getNext() === null)
+		{
 			this.addTail(val);
+		}
 		else {
 			let node = new Node(val);
 			let next = this.getCurNode().getNext();
