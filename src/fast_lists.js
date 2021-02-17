@@ -6,76 +6,76 @@
 export class Node {
 	constructor(val = null, prev = null, next = null) 
 	{
-		this.#val = val;
-		this.#prev = prev;
-		this.#next = next;
+		this._val = val;
+		this._prev = prev;
+		this._next = next;
 	}
 
 	setVal(value) {
-		this.#val = value;
+		this._val = value;
 	}
 
 	setPrev(prev) {
-		this.#prev = prev;
+		this._prev = prev;
 	}
 
 	setNext(next) {
-		this.#next = next;
+		this._next = next;
 	}
 
 	getVal() {
-		return this.#val;
+		return this._val;
 	}
 
-	setPrev(prev) {
-		return this.#prev;
+	getPrev(prev) {
+		return this._prev;
 	}
 
-	setNext(next) {
-		return this.#next;
+	getNext(next) {
+		return this._next;
 	}
 }
 
 export class FastLists 
 {
-	constructor(head = null, curNode = null, tail = null)
+	constructor(head = null, tail = null)
 	{
-		this.#head = head;
-		this.#tail = tail;
-		this.#curNode = curNode;
-		this.#cnt = 0;
+		this._head = head;
+		this._tail = tail;
+		this._curNode = head;
+		this._cnt = 0;
 	}
 
 	setHead(head) {
-		this.#head = head;
+		this._head = head;
 	}
 
 	setTail(tail) {
-		this.#tail = tail;
+		this._tail = tail;
 	}
 
 	setCurNode(node) {
-		this.#curNode = node;
+		this._curNode = node;
 	}
 		
 	getHead() {
-		return this.#head;
+		return this._head;
 	}
 
 	getTail() {
-		return this.#tail;
+		return this._tail;
 	}
 
 	getCurNode() {
-		return this.#curNode;
+		return this._curNode;
 	}
 
 	getCnt() {
-		return this.#cnt;
+		return this._cnt;
 	}
 
 	addToHead(node) {
-		if (this.getHead() == this.getTail())
+		if (this.getHead() === null)
 		{
 			this.setHead(node);
 			this.setTail(node);
@@ -85,12 +85,12 @@ export class FastLists
 			node.setNext(this.getHead());
 			this.setHead(node);
 		}
-		this.#cnt++;
+		this._cnt++;
 		this.setCurNode(node);
 	}
 
 	addTail(node) {
-		if (this.getHead() == this.getTail())
+		if (this.getHead() === null)
 		{
 			this.setHead(node);
 			this.setTail(node);
@@ -101,25 +101,27 @@ export class FastLists
 			this.setTail(node);
 		}
 		this.setCurNode(node);
-		this.#cnt++;
+		this._cnt++;
 	}
 
 	add(node) {
-		if (this.getHead() == this.getTail())
+		if (this.getCurNode().getNext() === null)
 		{
 			this.setHead(node);
 			this.setTail(node);
 			this.setCurNode(node);
 		}
 		else {
-			next = this.getCurNode().getNext();
-			prev = this.getCurNode().getPrev();
+			let next = this.getCurNode().getNext();
+			let curr = this.getCurNode();
+			console.log(next,curr)
 			node.setNext(next);
-			node.setPrev(prev);
+			node.setPrev(curr);
+			next.setPrev(node);
 			this.getCurNode().setNext(node);
-			this.getCurNode().setPrev(node);
+			this.setCurNode(node);
 		}
-		this.#cnt++;
+		this._cnt++;
 	}
 
 	forward() {

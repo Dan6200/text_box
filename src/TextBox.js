@@ -9,6 +9,7 @@ import modifier from './Reducer.js'
 import {Lines} from './Page.js'
 import {useInterval} from './utilities.js'
 import uuid from 'react-uuid'
+import {Node, FastLists} from './fast_lists.js'
 
 
 function TextBox()
@@ -16,6 +17,7 @@ function TextBox()
     const AppState = {
         /// Manages the state of the lines on the screen
         line: [[]],
+        line2: new FastLists(new Node('A')),
         /// Line Index...
         lIdx: 0,
         /// Word Index...
@@ -29,6 +31,11 @@ function TextBox()
     const [state, dispatch] = useReducer(modifier, AppState)
 
     const {line, lIdx, wIdx, caretOn, timerOn, wordWrap} = state;
+
+	console.log(state.line2.getHead())
+	state.line2.add(new Node('B'))
+	state.line2.forward()
+	console.log(state.line2.getHead())
 
 	/* -- QuerySelector worked much better than refs use this -- */
 	const span_elements = document.querySelectorAll('p > span');
