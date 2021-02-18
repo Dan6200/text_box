@@ -93,16 +93,21 @@ export function handleWrap(obj)
     let array = line[lIdx] 
     let i= array.length-1
     while (array[i] !== '\x20\u200c' && i >= 0) i--
+	let newWIdx
     if (i > 0) 
+	{
+		newWIdx = wIdx - i
         lastWord = array.splice(i, array.length - i + 1)
+	}
     line.splice(lIdx+1, 0, lastWord)
 	// Save the horizontal position of the cursor before wrapping
 	let wPos = line[lIdx].length - wIdx
+	console.log(wIdx, wPos, wPos+wIdx)
 	if (wIdx+1 >= line[lIdx].length)
 		return {
 			line,
 			lIdx: lIdx+1,
-			wIdx: lastWord.length,// - wPos,
+			wIdx: newWIdx,
 			wordWrap: false 
 		}
 	return {
