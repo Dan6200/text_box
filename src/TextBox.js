@@ -34,13 +34,15 @@ function TextBox()
     const {line, lIdx, wIdx, caretOn, timerOn, wordWrap} = state;
 
 	/* -- QuerySelector worked much better than refs use this -- */
-	const span_elements = document.querySelectorAll('p > span');
+	const span_elements = document.querySelectorAll('#txtbox > p > span');
 
     const txtBoxRef = useRef()
    
     const paraRef = useRef()
 
     const cursorRef = useRef()
+
+	console.log(state.line, state.lIdx)
 
     let spanWidth = (span_elements.length && span_elements[lIdx]) ? 
 		span_elements[lIdx].offsetWidth : 100	
@@ -83,8 +85,6 @@ function TextBox()
 		document.addEventListener('keydown', keyHandler)
 		return () =>  document.removeEventListener('keydown', keyHandler)
 	})
-
-	console.log(state.line)
 
     const linesParam = [ state, paraRef, cursorRef, caretOn ]
 

@@ -52,18 +52,18 @@ export function Backspace(obj) {
         wIdx
     } = obj
 
-    if (wIdx > -1 && line[lIdx].length > 0) 
+    if (wIdx && line[lIdx].length > 0) 
     {
         line[lIdx].splice(wIdx-1,1)
         wIdx-- 
     }
     else {
-        if (lIdx) 
-        {
+        if (!line.[lIdx].length) 
             line.splice(lIdx, 1)
-            lIdx--
-            wIdx = line[lIdx].length
-        }
+		if (lIdx) {
+			lIdx--
+			wIdx = line[lIdx].length
+		}
     }
     return {
         line,
