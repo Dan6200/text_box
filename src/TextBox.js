@@ -9,7 +9,7 @@ import modifier from './Reducer.js'
 import {Lines} from './Page.js'
 import {useInterval} from './utilities.js'
 import uuid from 'react-uuid'
-import {FastLists} from './fast_lists.js'
+/*import {FastLists} from './fast_lists.js'*/
 
 
 function TextBox()
@@ -17,7 +17,8 @@ function TextBox()
     const AppState = {
         /// Manages the state of the lines on the screen
         line: [[]],
-        line2: new FastLists(new FastLists()),
+		/* add the FastLists for performance improvements */
+        /*line2: new FastLists(new FastLists()),*/
         /// Line Index...
         lIdx: 0,
         /// Word Index...
@@ -52,7 +53,7 @@ function TextBox()
         }
     }, [spanWidth, wordWrap, line, lIdx, paraWidth])
 
-	useEffect(() => {
+	/*useEffect(() => {
 		for(let i=0; i<span_elements.length; i++)
 		{
 			if (span_elements[i])
@@ -62,7 +63,7 @@ function TextBox()
 					dispatch({type: "reverse_wrap"})
 			}
 		}
-	}, [span_elements, paraWidth])
+	}, [span_elements, paraWidth])*/
 
     useInterval(() => { // Controls the blinking of the timer
         (caretOn) ? dispatch({type: "hide-caret"}) :
