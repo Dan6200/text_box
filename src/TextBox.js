@@ -74,8 +74,6 @@ function TextBox()
         dispatch({type: "set-timer-on"});
     }, [line, lIdx, wIdx])
 
-    const linesParam = [ state, paraRef, cursorRef, caretOn ]
-
 	useEffect(() => {
 		let keyHandler = e => {
 			if (e.code.search(/F\d/) >= 0) return
@@ -85,6 +83,10 @@ function TextBox()
 		document.addEventListener('keydown', keyHandler)
 		return () =>  document.removeEventListener('keydown', keyHandler)
 	})
+
+	console.log(state.line)
+
+    const linesParam = [ state, paraRef, cursorRef, caretOn ]
 
     return (
         <div id="txtbox" 

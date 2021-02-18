@@ -14,6 +14,7 @@ export default function modifier(state, action)
             caretOn: true, timerOn: false, wordWrap: true,
         }
 
+		console.log(state.lIdx, state.wIdx)
         switch (action.type)
         {
             case "Backspace":
@@ -31,19 +32,27 @@ export default function modifier(state, action)
             case "ArrowLeft":
                 if (state.wIdx)
                     return { ...state, ...stateMods, wIdx: state.wIdx - 1}
+				else if (state.lIdx)
+					return { ...state, ...stateMods, lIdx: state.lIdx - 1, 
+						wIdx: state.line[state.lIdx-1].length}
 				return state
-				
             case "ArrowRight":
                 if (state.wIdx < state.line[state.lIdx].length)
                     return { ...state, ...stateMods, wIdx: state.wIdx + 1}
+				else if (state.lIdx < state.line.length-1)
+					return {...state, ...stateMods, lIdx: state.lIdx + 1, wIdx: 0}
 				return state
              case "ArrowUp":
                 if (state.lIdx)
-                    return { ...state, ...stateMods, lIdx: state.lIdx - 1}
+                    return { ...state, ...stateMods, lIdx: state.lIdx - 1, 
+						wIdx: (state.wIdx > state.line[state.lIdx-1].length) ?
+							state.line[state.lIdx-1].length : state.wIdx}
 				return state
             case "ArrowDown":
                 if (state.lIdx < state.line.length-1)
-                    return { ...state, ...stateMods, lIdx: state.lIdx + 1}
+                    return { ...state, ...stateMods, lIdx: state.lIdx + 1,
+						wIdx: (state.wIdx > state.line[state.lIdx+1].length) ?
+							state.line[state.lIdx+1].length : state.wIdx}
 				return state
             case "Enter":
                 return {...state, ...stateMods, Keys: genKeys([...state.Keys], 
