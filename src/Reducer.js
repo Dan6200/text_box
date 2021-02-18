@@ -9,7 +9,6 @@ import {
 export default function modifier(state, action)
 {
     try {
-		console.log(state.line, state.lIdx, state.wIdx)
         /// Stops the caret from blinking...
         const stateMods = {
             caretOn: true, timerOn: false, wordWrap: true,

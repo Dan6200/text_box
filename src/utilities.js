@@ -101,8 +101,6 @@ export function handleWrap(obj)
 	}
     line.splice(lIdx+1, 0, lastWord)
 	// Save the horizontal position of the cursor before wrapping
-	let wPos = line[lIdx].length - wIdx
-	console.log(wIdx, wPos, wPos+wIdx)
 	if (wIdx+1 >= line[lIdx].length)
 		return {
 			line,

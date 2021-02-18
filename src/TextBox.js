@@ -52,6 +52,18 @@ function TextBox()
         }
     }, [spanWidth, wordWrap, line, lIdx, paraWidth])
 
+	useEffect(() => {
+		for(let i=0; i<span_elements.length; i++)
+		{
+			if (span_elements[i])
+			{
+				let spanWidth = span_elements[i].offsetWidth
+				if (spanWidth < paraWidth) 
+					dispatch({type: "reverse_wrap"})
+			}
+		}
+	}, [span_elements, paraWidth])
+
     useInterval(() => { // Controls the blinking of the timer
         (caretOn) ? dispatch({type: "hide-caret"}) :
             dispatch({type: "show-caret"})
@@ -65,6 +77,7 @@ function TextBox()
 
 	useEffect(() => {
 		let keyHandler = e => {
+			if (e.code.search(/F\d/) >= 0) return
 			e.preventDefault()
 			dispatch({type: e.key})
 		}
