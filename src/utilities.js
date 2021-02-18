@@ -33,15 +33,13 @@ export function spaceBar({line, lIdx, wIdx}) {
     }
 }
 
-export function updateLine(key, line, line2, lIdx, wIdx) {
+export function updateLine(key, line, lIdx, wIdx) {
     if (key.length === 1) 
     {
         line[lIdx].splice(wIdx,0,key)
-		line2.add(key)
     }
     return {
         line,
-		line2,
         lIdx,
         wIdx: wIdx + 1
     }
@@ -90,7 +88,7 @@ export function handleEnterKey(obj)
 export function handleWrap(obj)
 {
 	/* --- TODO: This function is Buggy fix this! --- */
-    const {line, lIdx} = obj
+    const {line, lIdx, wIdx} = obj
     let lastWord = []
     let array = line[lIdx] 
     let i= array.length-1
@@ -98,12 +96,17 @@ export function handleWrap(obj)
     if (i > 0) 
         lastWord = array.splice(i, array.length - i + 1)
     line.splice(lIdx+1, 0, lastWord)
-	
+	// Save the horizontal position of the cursor before wrapping
+	let wPos = line[lIdx].length - wIdx
+	if (wIdx+1 >= line[lIdx].length)
+		return {
+			line,
+			lIdx: lIdx+1,
+			wIdx: lastWord.length,// - wPos,
+			wordWrap: false 
+		}
 	return {
 		line,
-		lIdx: lIdx+1,
-		wIdx: lastWord.length,
-		wordWrap: false 
+		wordWrap: false
 	}
-
 }

@@ -17,7 +17,7 @@ function TextBox()
     const AppState = {
         /// Manages the state of the lines on the screen
         line: [[]],
-        line2: new FastLists(),
+        line2: new FastLists(new FastLists()),
         /// Line Index...
         lIdx: 0,
         /// Word Index...
