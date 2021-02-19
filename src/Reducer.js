@@ -3,7 +3,8 @@
 /////////////////////////////////////////////////////////////////////
 
 import {
-    Backspace, updateLine, spaceBar, handleEnterKey, handleWrap, genKeys
+    Backspace, updateLine, spaceBar, handleEnterKey, handleWrap, genKeys,
+	handleArrowLeft, handleArrowRight, handleArrowUp, handleArrowDown,
 } from './utilities.js'
 
 export default function modifier(state, action)
@@ -13,58 +14,31 @@ export default function modifier(state, action)
         const stateMods = {
             caretOn: true, timerOn: false, wordWrap: true,
         }
+		console.log(state)
         switch (action.type)
         {
             case "Backspace":
              // Calls the Function that handles backspaces 
                 /// Update state values...
-                return {...state, ...stateMods, ...Backspace({  
-                    line: state.line, lIdx: state.lIdx, wIdx: state.wIdx
-                })}
+                return {...state, ...stateMods, ...Backspace(state)}
             case " ":
             // Calls the fucntion that handles input from the spacebar
                 /// Update state values...
-                return {...state, ...stateMods, ...spaceBar({
-                    line: state.line, lIdx: state.lIdx, wIdx: state.wIdx
-                })}
+                return {...state, ...stateMods, ...spaceBar(state)}
             case "ArrowLeft":
-                if (state.wIdx)
-                    return { ...state, ...stateMods, wIdx: state.wIdx - 1}
-				else if (state.lIdx)
-					return { ...state, ...stateMods, lIdx: state.lIdx - 1, 
-						wIdx: state.line[state.lIdx-1].length}
-				return state
+				return {...state, ...stateMods, ...handleArrowLeft(state)}
             case "ArrowRight":
-                if (state.wIdx < state.line[state.lIdx].length)
-                    return { ...state, ...stateMods, wIdx: state.wIdx + 1}
-				else if (state.lIdx < state.line.length-1)
-					return {...state, ...stateMods, lIdx: state.lIdx + 1, wIdx: 0}
-				return state
+				return {...state, ...stateMods, ...handleArrowRight(state)}
              case "ArrowUp":
-                if (state.lIdx)
-                    return { ...state, ...stateMods, lIdx: state.lIdx - 1, 
-						wIdx: (state.wIdx > state.line[state.lIdx-1].length) ?
-							state.line[state.lIdx-1].length : state.wIdx}
-				return state
+				return {...state, ...stateMods, ...handleArrowUp(state)}
             case "ArrowDown":
-                if (state.lIdx < state.line.length-1)
-                    return { ...state, ...stateMods, lIdx: state.lIdx + 1,
-						wIdx: (state.wIdx > state.line[state.lIdx+1].length) ?
-							state.line[state.lIdx+1].length : state.wIdx}
-				return state
+				return {...state, ...stateMods, ...handleArrowDown(state)}
             case "Enter":
-                return {...state, ...stateMods, Keys: genKeys([...state.Keys], 
-                    state.line.length + 1, state.Keys.length), ...handleEnterKey(
-						{line: state.line, lIdx: state.lIdx, wIdx: state.wIdx}
-					)
-				}
+                return {...state, ...stateMods, Keys: genKeys(state),
+					...handleEnterKey(state)}
             case "text_wrap":
                 return {...state, ...stateMods, Keys: genKeys([...state.Keys], 
-                    state.line.length + 1, state.Keys.length), ...handleWrap ({
-						line: state.line, 
-						lIdx: state.lIdx, wIdx: state.wIdx,
-						wordWrap: state.wordWrap
-                })}
+                    state.line.length + 1, state.Keys.length), ...handleWrap(state)}
             case "hide-caret":
                 return {...state, caretOn: state.caretOn=false};
             case "show-caret":
@@ -73,9 +47,7 @@ export default function modifier(state, action)
                 return {...state, timerOn: state.timerOn=true};
             default:
                 /// Update state values...
-                return {...state, ...stateMods, ...updateLine(
-                    action.type, state.line, state.lIdx, state.wIdx
-                )}
+                return {...state, ...stateMods, ...updateLine(action.type, state)}
             }
             
     }

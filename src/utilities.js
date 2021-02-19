@@ -17,7 +17,10 @@ export const useInterval = (func, delay, start) => {
 	
 }
 
-export const genKeys = (Keys, howMany, numOfKeys) => {
+export const genKeys = state => {
+	const {Keys, line} = state
+	let howMany = line.length + 1
+	let numOfKeys = Keys.length
     if (howMany > numOfKeys)
         while(numOfKeys++ < howMany+5)
             Keys.push(uuid())
@@ -33,7 +36,8 @@ export function spaceBar({line, lIdx, wIdx}) {
     }
 }
 
-export function updateLine(key, line, lIdx, wIdx) {
+export function updateLine(key, state) {
+	const {line, lIdx, wIdx} = state
     if (key.length === 1) 
     {
         line[lIdx].splice(wIdx,0,key)
@@ -113,3 +117,80 @@ export function handleWrap(obj)
 		wordWrap: false
 	}
 }
+
+export function handleArrowLeft(state) {
+	const {line, lIdx, wIdx} = state
+	// Bounding inputs
+	let {newLidx, newWidx} = boundingInputHlper(state)
+	if (wIdx) {
+		newWidx = wIdx - 1
+	}
+	else if (lIdx) {
+		newLidx = lIdx - 1
+		newWidx = line[lIdx - 1].length
+	}
+	return {
+		lIdx : newLidx,
+		wIdx : newWidx
+	}
+}
+	
+export function handleArrowRight(state) {
+	const {line, lIdx, wIdx} = state
+	// Bounding inputs
+	let {newLidx, newWidx} = boundingInputHlper(state)
+	if (wIdx < line[lIdx].length) {
+		newWidx = wIdx + 1
+	}
+	else if (lIdx < line.length - 1) {
+		newLidx = lIdx + 1
+		newWidx = 0
+	}
+	return {
+		lIdx : newLidx,
+		wIdx : newWidx
+	}
+}
+
+export function handleArrowUp(state) {
+	const {line, lIdx, wIdx} = state
+	// Bounding inputs
+	let {newLidx, newWidx} = boundingInputHlper(state)
+	if (lIdx) 
+	{
+		newLidx = lIdx - 1
+		newWidx = wIdx > line[lIdx - 1].length ?
+			line[lIdx - 1].length : wIdx
+	}
+	return {
+		lIdx: newLidx,
+		wIdx: newWidx
+	}
+}
+
+export function handleArrowDown(state) {
+	const {line, lIdx, wIdx} = state
+	// Bounding inputs
+	let {newLidx, newWidx} = boundingInputHlper(state)
+	if (lIdx < line.length - 1) 
+	{
+		newLidx = lIdx + 1
+		newWidx = wIdx > line[lIdx + 1].length ?
+			line[lIdx + 1].length : wIdx
+	}
+	return {
+		lIdx: newLidx,
+		wIdx: newWidx
+	}
+}
+
+function boundingInputHlper(state) {
+	const {line, lIdx, wIdx} = state
+	let newLidx, newWidx
+	newLidx = (lIdx >= 0) ? lIdx : 0
+	newLidx = (lIdx < line.length) ? lIdx : line.length-1
+	newWidx = (wIdx >= 0) ? wIdx : 0
+	newWidx = (wIdx <= line[lIdx].length) ? wIdx : line[lIdx].length
+	return {newLidx, newWidx}
+}
+

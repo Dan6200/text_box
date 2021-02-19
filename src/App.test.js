@@ -23,7 +23,7 @@ test('Left Scrolling', () => {
 	})()).toEqual({lIdx: 0, wIdx: 0})
 
 	expect((() => {
-		const {lIdx, wIdx} = modifier({lIdx: 0, wIdx: 0,}, {type: "ArrowLeft"})
+		const {lIdx, wIdx} = modifier({lIdx: 0, wIdx: -1,}, {type: "ArrowLeft"})
 		return {lIdx, wIdx}
 	})()).toEqual({lIdx: 0, wIdx: 0})
 
@@ -50,6 +50,46 @@ test('Right Scrolling', () => {
 	expect((() => {
 		const {lIdx, wIdx} = modifier({line: [['A', 'B'], ['C']], 
 			lIdx: 1, wIdx: 1,}, {type: "ArrowRight"})
+		return {lIdx, wIdx}
+	})()).toEqual({lIdx: 1, wIdx: 1})
+})
+
+test('Up Scrolling', () => {
+	expect((() => {
+		const {lIdx, wIdx} = modifier({line: [['A', 'B']], 
+			lIdx: 0, wIdx: 1,}, {type: "ArrowUp"})
+		return {lIdx, wIdx}
+	})()).toEqual({lIdx: 0, wIdx: 1})
+
+	expect((() => {
+		const {lIdx, wIdx} = modifier({line: [['A', 'B'], ['C']], 
+			lIdx: 0, wIdx: 2,}, {type: "ArrowUp"})
+		return {lIdx, wIdx}
+	})()).toEqual({lIdx: 0, wIdx: 2})
+
+	expect((() => {
+		const {lIdx, wIdx} = modifier({line: [['A', 'B'], ['C']], 
+			lIdx: 1, wIdx: 1,}, {type: "ArrowUp"})
+		return {lIdx, wIdx}
+	})()).toEqual({lIdx: 0, wIdx: 1})
+})
+
+test('Down Scrolling', () => {
+	expect((() => {
+		const {lIdx, wIdx} = modifier({line: [['A', 'B']], 
+			lIdx: 0, wIdx: 1,}, {type: "ArrowDown"})
+		return {lIdx, wIdx}
+	})()).toEqual({lIdx: 0, wIdx: 1})
+
+	expect((() => {
+		const {lIdx, wIdx} = modifier({line: [['A', 'B'], ['C']], 
+			lIdx: 0, wIdx: 2,}, {type: "ArrowDown"})
+		return {lIdx, wIdx}
+	})()).toEqual({lIdx: 1, wIdx: 1})
+
+	expect((() => {
+		const {lIdx, wIdx} = modifier({line: [['A', 'B'], ['C']], 
+			lIdx: 2, wIdx: 1,}, {type: "ArrowDown"})
 		return {lIdx, wIdx}
 	})()).toEqual({lIdx: 1, wIdx: 1})
 })
