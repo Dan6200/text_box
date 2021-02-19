@@ -29,12 +29,12 @@ export default function modifier(state, action)
 				return {...state, ...stateMods, ...handleArrowLeft(state)}
             case "ArrowRight":
 				return {...state, ...stateMods, ...handleArrowRight(state)}
-             case "ArrowUp":
+			case "ArrowUp":
 				return {...state, ...stateMods, ...handleArrowUp(state)}
             case "ArrowDown":
 				return {...state, ...stateMods, ...handleArrowDown(state)}
             case "Enter":
-                return {...state, ...stateMods, Keys: genKeys(state),
+				return {...state, ...stateMods, Keys: genKeys(state),
 					...handleEnterKey(state)}
             case "text_wrap":
                 return {...state, ...stateMods, Keys: genKeys([...state.Keys], 

@@ -6,13 +6,12 @@ import App from './App';
 import modifier from './Reducer.js';
 
 test('adds letter to keyboard state', () => {
-	expect(modifier(
-	{
+	expect(modifier({
 		line: [[]], 
 		lIdx: 0,
 		wIdx: 0,
 	},
-		{type: 'A'}
+	{type: 'A'}
 	).line[0][0]).toBe('A')
 })
 
