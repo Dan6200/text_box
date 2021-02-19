@@ -122,10 +122,10 @@ export function handleArrowLeft(state) {
 	const {line, lIdx, wIdx} = state
 	// Bounding inputs
 	let {newLidx, newWidx} = boundingInputHlper(state)
-	if (wIdx) {
+	if (wIdx > 0) {
 		newWidx = wIdx - 1
 	}
-	else if (lIdx) {
+	else if (lIdx > 0) {
 		newLidx = lIdx - 1
 		newWidx = line[lIdx - 1].length
 	}
@@ -156,7 +156,7 @@ export function handleArrowUp(state) {
 	const {line, lIdx, wIdx} = state
 	// Bounding inputs
 	let {newLidx, newWidx} = boundingInputHlper(state)
-	if (lIdx) 
+	if (lIdx > 0) 
 	{
 		newLidx = lIdx - 1
 		newWidx = wIdx > line[lIdx - 1].length ?
@@ -188,9 +188,9 @@ function boundingInputHlper(state) {
 	const {line, lIdx, wIdx} = state
 	let newLidx, newWidx
 	newLidx = (lIdx >= 0) ? lIdx : 0
-	newLidx = (lIdx < line.length) ? lIdx : line.length-1
+	newLidx = (lIdx < line.length) ? newLidx : line.length-1
 	newWidx = (wIdx >= 0) ? wIdx : 0
-	newWidx = (wIdx <= line[lIdx].length) ? wIdx : line[lIdx].length
+	newWidx = (wIdx <= line[newLidx].length) ? newWidx : line[newLidx].length
 	return {newLidx, newWidx}
 }
 

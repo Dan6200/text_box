@@ -18,12 +18,14 @@ test('adds letter to keyboard state', () => {
 
 test('Left Scrolling', () => {
 	expect((() => {
-		const {lIdx, wIdx} = modifier({lIdx: 0, wIdx: 1,}, {type: "ArrowLeft"})
+		const {lIdx, wIdx} = modifier({line: [['A', 'B']], 
+			lIdx: 0, wIdx: 1,}, {type: "ArrowLeft"})
 		return {lIdx, wIdx}
 	})()).toEqual({lIdx: 0, wIdx: 0})
 
 	expect((() => {
-		const {lIdx, wIdx} = modifier({lIdx: 0, wIdx: -1,}, {type: "ArrowLeft"})
+		const {lIdx, wIdx} = modifier({line: [['A', 'B']], 
+			lIdx: 0, wIdx: -1,}, {type: "ArrowLeft"})
 		return {lIdx, wIdx}
 	})()).toEqual({lIdx: 0, wIdx: 0})
 
