@@ -37,8 +37,8 @@ export default function modifier(state, action)
 				return {...state, ...stateMods, Keys: genKeys(state),
 					...handleEnterKey(state)}
             case "text_wrap":
-                return {...state, ...stateMods, Keys: genKeys([...state.Keys], 
-                    state.line.length + 1, state.Keys.length), ...handleWrap(state)}
+                return {...state, ...stateMods, Keys: genKeys(state),
+					...handleWrap(state)}
             case "hide-caret":
                 return {...state, caretOn: state.caretOn=false};
             case "show-caret":
