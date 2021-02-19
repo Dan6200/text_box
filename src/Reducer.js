@@ -14,7 +14,7 @@ export default function modifier(state, action)
         const stateMods = {
             caretOn: true, timerOn: false, wordWrap: true,
         }
-		console.log(state)
+		//console.log(state)
         switch (action.type)
         {
             case "Backspace":
@@ -24,35 +24,35 @@ export default function modifier(state, action)
             case " ":
             // Calls the fucntion that handles input from the spacebar
                 /// Update state values...
-                return {...state, ...stateMods, ...spaceBar(state)}
-            case "ArrowLeft":
+				return {...state, ...stateMods, ...spaceBar(state)}
+			case "ArrowLeft":
 				return {...state, ...stateMods, ...handleArrowLeft(state)}
-            case "ArrowRight":
+			case "ArrowRight":
 				return {...state, ...stateMods, ...handleArrowRight(state)}
 			case "ArrowUp":
 				return {...state, ...stateMods, ...handleArrowUp(state)}
-            case "ArrowDown":
+			case "ArrowDown":
 				return {...state, ...stateMods, ...handleArrowDown(state)}
-            case "Enter":
+			case "Enter":
 				return {...state, ...stateMods, Keys: genKeys(state),
 					...handleEnterKey(state)}
-            case "text_wrap":
-                return {...state, ...stateMods, Keys: genKeys(state),
+			case "text_wrap":
+				return {...state, ...stateMods, Keys: genKeys(state),
 					...handleWrap(state)}
-            case "hide-caret":
-                return {...state, caretOn: state.caretOn=false};
-            case "show-caret":
-                return {...state, caretOn: state.caretOn=true};
-            case "set-timer-on":
-                return {...state, timerOn: state.timerOn=true};
-            default:
-                /// Update state values...
-                return {...state, ...stateMods, ...updateLine(action.type, state)}
-            }
-            
-    }
-	catch (e) {
-        console.log(state)
+			case "hide-caret":
+				return {...state, caretOn: state.caretOn=false};
+			case "show-caret":
+				return {...state, caretOn: state.caretOn=true};
+			case "set-timer-on":
+				return {...state, timerOn: state.timerOn=true};
+			default:
+				/// Update state values...
+				return {...state, ...stateMods, ...updateLine(action.type, state)}
+			}
+
+}
+catch (e) {
+console.log(state)
     }
 
 }
