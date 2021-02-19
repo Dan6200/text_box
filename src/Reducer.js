@@ -79,7 +79,7 @@ export default function modifier(state, action)
             }
             
     }
-        catch (e) {
+	catch (e) {
         console.log(state)
     }
 

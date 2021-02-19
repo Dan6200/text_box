@@ -54,3 +54,10 @@ test('Right Scrolling', () => {
 	})()).toEqual({lIdx: 1, wIdx: 1})
 })
 
+test('Caret Blinking', () => {
+	expect(modifier({caretOn: true}, 
+	{type: 'hide-caret'}).caretOn).toBeFalsy()
+
+	expect(modifier({caretOn: false}, 
+	{type: 'show-caret'}).caretOn).toBeTruthy()
+})
