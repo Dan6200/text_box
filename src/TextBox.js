@@ -42,8 +42,6 @@ function TextBox()
 
     const cursorRef = useRef()
 
-	console.log(state.line, state.lIdx)
-
     let spanWidth = (span_elements.length && span_elements[lIdx]) ? 
 		span_elements[lIdx].offsetWidth : 100	
 

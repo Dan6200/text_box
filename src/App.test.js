@@ -34,5 +34,23 @@ test('Left Scrolling', () => {
 	})()).toEqual({lIdx: 0, wIdx: 2})
 })
 
+test('Right Scrolling', () => {
+	expect((() => {
+		const {lIdx, wIdx} = modifier({line: [['A', 'B']], 
+			lIdx: 0, wIdx: 1,}, {type: "ArrowRight"})
+		return {lIdx, wIdx}
+	})()).toEqual({lIdx: 0, wIdx: 2})
 
+	expect((() => {
+		const {lIdx, wIdx} = modifier({line: [['A', 'B'], ['C']], 
+			lIdx: 0, wIdx: 2,}, {type: "ArrowRight"})
+		return {lIdx, wIdx}
+	})()).toEqual({lIdx: 1, wIdx: 0})
+
+	expect((() => {
+		const {lIdx, wIdx} = modifier({line: [['A', 'B'], ['C']], 
+			lIdx: 1, wIdx: 1,}, {type: "ArrowRight"})
+		return {lIdx, wIdx}
+	})()).toEqual({lIdx: 1, wIdx: 1})
+})
 

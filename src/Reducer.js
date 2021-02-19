@@ -13,7 +13,6 @@ export default function modifier(state, action)
         const stateMods = {
             caretOn: true, timerOn: false, wordWrap: true,
         }
-	console.log(state.lIdx, state.wIdx)
         switch (action.type)
         {
             case "Backspace":
