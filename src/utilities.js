@@ -120,24 +120,39 @@ export function handleWrap(obj)
 	}
 }
 
+let font_size
+let TEST
 export function reverseWrap(state) 
 {
 	/*	 Reverse Wrapping Algorithm:
 		  greedily maximizes the amount of words that can fit in a 
 	      line with line breaks								 		*/
 
-	const p_element = document.querySelector('#txtbox > p')
-	const span_element = document.querySelector('#txtbox > p > span')
-	const font_size = getComputedStyle(span_element).fontSize
-	console.log(font_size)
-	/*
-		TODO:
+	/* TODO:
 		Algorithm:
 		  - Estimate the font size
 		  - Figure out how much chars can fit in a paragraph element
 		  - Estimate how to minimize whitespace in each paragraph by filling the span
 		  	elements with characters from the next line
 	*/
+
+	const p_element = document.querySelector('#txtbox > p')
+	if (!font_size)
+		font_size = getComputedStyle(p_element).fontSize
+	console.log(font_size)
+	if (!TEST)
+	{
+		const TEST = document.getElementById('test')
+		TEST.style.fontSize = font_size
+	}
+	const WIDTH = TEST.clientWidth
+	const WIDTH_PER_CHAR = WIDTH / 52
+	// Find how much space is left
+	const span_element = document.querySelector('#txtbox > p > span')
+	const P_WIDTH = p_element.clientWidth
+	const SPAN_WIDTH = span_element.offsetWidth
+	const DIFF = P_WIDTH - SPAN_WIDTH
+
 }
 
 export function handleArrowLeft(state) {
