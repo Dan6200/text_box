@@ -97,6 +97,7 @@ export function handleWrap(obj)
     let lastWord = []
     let array = line[lIdx] 
     let i= array.length-1
+	/// Break at a space character if you can
     while (array[i] !== '\x20\u200c' && i >= 0) i--
 	let newWIdx = 0
     if (i < 0) i = array.length - 3
@@ -115,6 +116,22 @@ export function handleWrap(obj)
 		line,
 		wordWrap: false
 	}
+}
+
+export function reverseWrap(state) 
+{
+	const p_element = document.querySelector('#txtbox > p')
+	const span_element = document.querySelector('#txtbox > p > span')
+	const font_size = getComputedStyle(span_element).fontSize
+	console.log(font_size)
+	/*
+		TODO:
+		Algorithm:
+		  - Estimate the font size
+		  - Figure out how much chars can fit in a paragraph element
+		  - Estimate how to minimize whitespace in each paragraph by filling the span
+		  	elements with characters from the next line
+	*/
 }
 
 export function handleArrowLeft(state) {
