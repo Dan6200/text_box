@@ -91,9 +91,10 @@ export function handleEnterKey(obj)
 
 export function handleWrap(obj)
 {
-	/* --- TODO: This function is Buggy fix this! --- */
+	/* Line Wrapping Algorithm: 
+		creates line breaks if there is no space left in a line */
     const {line, lIdx, wIdx} = obj
-	//debugger
+	debugger
     let lastWord = []
     let array = line[lIdx] 
     let i= array.length-1
@@ -101,10 +102,11 @@ export function handleWrap(obj)
     while (array[i] !== '\x20\u200c' && i >= 0) i--
 	let newWIdx = 0
     if (i < 0) i = array.length - 3
+	// Save the horizontal position of the cursor before wrapping
 	newWIdx = wIdx - i
 	lastWord = array.splice(i, array.length - i + 1)
     line.splice(lIdx+1, 0, lastWord)
-	// Save the horizontal position of the cursor before wrapping
+	// Change cursor pos, if at the end of the line.
 	if (wIdx+1 >= line[lIdx].length)
 		return {
 			line,
@@ -120,6 +122,10 @@ export function handleWrap(obj)
 
 export function reverseWrap(state) 
 {
+	/*	 Reverse Wrapping Algorithm:
+		  greedily maximizes the amount of words that can fit in a 
+	      line with line breaks								 		*/
+
 	const p_element = document.querySelector('#txtbox > p')
 	const span_element = document.querySelector('#txtbox > p > span')
 	const font_size = getComputedStyle(span_element).fontSize
