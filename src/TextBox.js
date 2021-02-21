@@ -6,7 +6,7 @@
 
 import React, {useRef, useEffect, useReducer } from 'react'
 import modifier from './Reducer.js'
-import {Lines} from './Page.js'
+import {Lines} from './View.js'
 import {useInterval} from './utilities.js'
 import uuid from 'react-uuid'
 /*import {FastLists} from './fast_lists.js'*/

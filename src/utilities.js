@@ -62,9 +62,9 @@ export function Backspace(obj) {
         wIdx-- 
     }
     else {
-        if (!line.[lIdx].length) 
+        if (!line.[lIdx].length && line.length > 1) 
             line.splice(lIdx, 1)
-		if (lIdx) {
+		if (lIdx > 0) {
 			lIdx--
 			wIdx = line[lIdx].length
 		}
@@ -152,7 +152,6 @@ export function reverseWrap(state)
 	const P_WIDTH = p_element.clientWidth
 	const SPAN_WIDTH = span_element.offsetWidth
 	const DIFF = P_WIDTH - SPAN_WIDTH
-
 }
 
 export function handleArrowLeft(state) {
