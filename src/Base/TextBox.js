@@ -5,11 +5,10 @@
 
 
 import React, {useRef, useEffect, useReducer } from 'react'
-import modifier from './Reducer.js'
-import {Lines} from './View.js'
-import {useInterval} from './utilities.js'
+import modifier from './Logic/Reducer.js'
+import {Lines} from './UI/Page.js'
+import {useInterval} from './Logic/utilities.js'
 import uuid from 'react-uuid'
-/*import {FastLists} from './fast_lists.js'*/
 
 
 function TextBox()
@@ -17,10 +16,10 @@ function TextBox()
     const AppState = {
         /// Manages the state of the lines on the screen
         line: [[]],
-		/* add the FastLists for performance improvements */
-        /*line2: new FastLists(new FastLists()),*/
+
         /// Line Index...
         lIdx: 0,
+
         /// Word Index...
         wIdx: 0,
 

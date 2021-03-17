@@ -1,4 +1,4 @@
-import './App.css';
+import './UI/App.css';
 import TextBox from './TextBox.js'
 
 function App() {
