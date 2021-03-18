@@ -5,9 +5,9 @@
 
 
 import React, {useRef, useEffect, useReducer } from 'react'
-import modifier from './Logic/Reducer.js'
-import {Lines} from './UI/Page.js'
-import {useInterval} from './Logic/utilities.js'
+import modifier from '../Logic/Reducer.js'
+import {Lines} from '../UI/Page.js'
+import {useInterval} from '../Logic/utilities.js'
 import uuid from 'react-uuid'
 
 
