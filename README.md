@@ -1,3 +1,3 @@
 # Text Editor
-In this project I implement a simple Text Editor
+In this project I implement a simple Rich Text Editor
 
